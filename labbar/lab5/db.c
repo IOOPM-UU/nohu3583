@@ -36,11 +36,11 @@ void print_item(const item_t *t)
 
 void print_menu(){
     printf("[L]ägga till en vara\n"
-           "[T]a bort en vara"
-            "[R]edigera en vara"
-            "Ån[g]ra senaste ändringen"
-            "Lista [h]ela varukatalogen"
-            "[A]vsluta");
+           "[T]a bort en vara\n"
+            "[R]edigera en vara\n"
+            "Ån[g]ra senaste ändringen\n"
+            "Lista [h]ela varukatalogen\n"
+            "[A]vsluta\n");
 }
 
 char ask_question_menu() {
@@ -52,7 +52,7 @@ char ask_question_menu() {
     while (strlen(val) != 1 || !is_in_list(val, valid, n)) {
         printf("Valet är fel, du får endast välja mellan det som är i menyn med [] runt\n");
         free(val);
-        val = ask_question_string("Ange val: ");
+        val = ask_question_string("Ange val:");
     }
     char result = val[0];  // only take the first character
     free(val);
@@ -181,7 +181,7 @@ void event_loop(item_t *db, int *db_size) {
         } 
         else if(event == 'R') {
             edit_db(db, *db_size);
-        } 
+        }
         else if(event == 'G') {
             printf("Not yet implemented!\n");
         }
@@ -196,60 +196,9 @@ void event_loop(item_t *db, int *db_size) {
 }
 
 
-int main(int argc, char *argv[])
-{
-  char *array1[] = {"Gyros", "Kebab", "Falafel" }; // TODO: Lägg till!
-  char *array2[] = {"Apple", "Citrus", "Orange" }; // TODO: Lägg till!
-  char *array3[] = {"Kitkat", "Diam",  "Twix" }; // TODO: Lägg till!
-
-  if (argc < 2)
-  {
-    printf("Usage: %s number\n", argv[0]);
-  }
-  else
-  {
+int main(void){
     item_t db[16]; // Array med plats för 16 varor
     int db_siz = 0; // Antalet varor i arrayen just nu
-
-    int items = atoi(argv[1]); // Antalet varor som skall skapas
-
-    if (items > 0 && items <= 16)
-    {
-      for (int i = 0; i < items; ++i)
-      {
-        // Läs in en vara, lägg till den i arrayen, öka storleksräknaren
-        item_t item = input_item();
-        db[db_siz] = item;
-        ++db_siz;
-      }
-    }
-    else
-    {
-      puts("Sorry, must have [1-16] items in database.");
-      return 1; // Avslutar programmet!
-    }
-
-    for (int i = db_siz; i < 16; ++i)
-      {
-        char *name = magick(array1, array2, array3, 3); // TODO: Lägg till storlek
-        char *desc = magick(array1, array2, array3, 3); // TODO: Lägg till storlek
-        int price = random() % 200000;
-        char shelf[] = { random() % ('Z'-'A') + 'A',
-                         random() % 10 + '0',
-                         random() % 10 + '0',
-                         '\0' };
-        item_t item = make_item(name, desc, price, shelf);
-
-        db[db_siz] = item;
-        ++db_siz;
-      }
-
-     // Skriv ut innehållet
-     for (int i = 0; i < db_siz; ++i)
-     {
-       print_item(&db[i]);
-     }
-
-  }
-  return 0;
+    event_loop(db, &db_siz);
+    return 0;
 }

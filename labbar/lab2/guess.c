@@ -9,13 +9,12 @@ int main(void)
     int sant = 0;
 
     char name[100];  // buffert för namn
-    ask_question_string("What is your name?", name, sizeof(name));
+    ask_question_string("What is your name?\n", name, sizeof(name));
 
     printf("Du %s, jag tänker på ett nummer ... kan du gissa vilket?\n", name);
 
     while(amount_of_guesses < 15) {
-        int guess = ask_question_int("Gissa ett tal:");
-
+        int guess = ask_question_int("Gissa ett tal:\n");
         if (guess < nmr) {
             printf("För litet!\n");
         } else if (guess > nmr) {
@@ -25,7 +24,6 @@ int main(void)
             sant = 1;
             break;
         }
-
         amount_of_guesses++;
     }
 

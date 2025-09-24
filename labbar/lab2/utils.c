@@ -20,10 +20,9 @@ int ask_question_int(char *question)
 
     do
     {
-        printf("%s\n", question);
+        printf("%s", question);
         conversions = scanf("%d", &result);
         clear_input_buffer();  // töm bufferten efter varje inläsning
-        putchar('\n');
     }
     while (conversions < 1);
 
@@ -34,7 +33,7 @@ char *ask_question_string(char *question, char *buf, int buf_siz)
 {
     int i = 0;
 
-    printf("%s\n", question);
+    printf("%s", question);
     i = read_string(buf, buf_siz);
 
     while(i == 0) // tom sträng, fråga igen

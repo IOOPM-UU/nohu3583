@@ -8,7 +8,7 @@ int main(void)
     int amount_of_guesses = 0;
     int sant = 0;
 
-    char *name = ask_question_string("What is your name");
+    char *name = ask_question_string("What is your name: \n");
 
     printf("Du %s, jag tänker på ett nummer ... kan du gissa vilket?\n", name);
 

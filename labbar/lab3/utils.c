@@ -87,7 +87,7 @@ answer_t make_string(char *str) {
 answer_t ask_question(char *question, check_func *check, convert_func *convert) {
     char *input;
     while (1) {
-        printf("%s ", question);
+        printf("%s", question);
         input = read_string();
         if (input && check(input)) {
             return convert(input);

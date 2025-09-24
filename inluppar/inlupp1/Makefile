@@ -23,4 +23,5 @@ memtest: $(TARGET)
 	valgrind --leak-check=full ./$(TARGET)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(OBJS) $(TARGET) a.out
+

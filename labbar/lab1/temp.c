@@ -24,6 +24,12 @@ bool is_number(char *str) {
             return false; // hittade ett icke-siffrigt tecken
         }
     }
+
+    // for(int i = 0; i < len; i++){
+    //   if(str[i] < '1' || str[i] > '9') {
+    //     return false;
+    //   }
+    // }
     return true; // alla tecken är siffror
 }
 

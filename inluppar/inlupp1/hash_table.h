@@ -1,42 +1,44 @@
 #pragma once
 
-/**
- * @file hash_table.h
- * @author write both your names here
- * @date 1 Sep 2022
- * @brief Simple hash table that maps integer keys to string values.
- *
- * Here typically goes a more extensive explanation of what the header
- * defines. Doxygens tags are words preceeded by either a backslash @\
- * or by an at symbol @@.
- *
- * @see $CANVAS_OBJECT_REFERENCE$/assignments/gb54499f3b7b264e3af3b68c756090f52
- */
+/// ---------------------- Types ----------------------
 
+// Forward declaration of internal entry struct
+typedef struct entry entry_t;
+
+/// Hash table type
 typedef struct hash_table ioopm_hash_table_t;
 
-/// @brief Create a new hash table
-/// @return A new empty hash table
+/// ---------------------- API ----------------------
+
+/**
+ * Create a new hash table with 17 buckets (each with a dummy head)
+ * Returns a pointer to the allocated hash table
+ */
 ioopm_hash_table_t *ioopm_hash_table_create(void);
 
-/// @brief Delete a hash table and free its memory
-/// @param ht a hash table to be deleted
+/**
+ * Destroy a hash table and free all dynamically allocated memory
+ */
 void ioopm_hash_table_destroy(ioopm_hash_table_t *ht);
 
-/// @brief add key => value entry in hash table ht
-/// @param ht hash table operated upon
-/// @param key key to insert
-/// @param value value to insert
+/**
+ * Insert a key/value pair into the hash table.
+ * If the key exists, updates the value.
+ */
 void ioopm_hash_table_insert(ioopm_hash_table_t *ht, int key, char *value);
 
-/// @brief lookup value for key in hash table ht
-/// @param ht hash table operated upon
-/// @param key key to lookup
-/// @return the value mapped to by key (FIXME: incomplete)
-char *ioopm_hash_table_lookup(ioopm_hash_table_t *ht, int key);
+/**
+ * Find the previous entry in a bucket for a given key
+ * Returns pointer to the previous entry, or NULL if key not found
+ */
+entry_t* find_previous_entry_for_key(entry_t *bucket_head, int key);
 
-/// @brief remove any mapping from key to a value
-/// @param ht hash table operated upon
-/// @param key key to remove
-/// @return the value mapped to by key (FIXME: incomplete)
-char *ioopm_hash_table_remove(ioopm_hash_table_t *ht, int key);
+/**
+ * Compute the bucket index for a given key (internal use)
+ */
+unsigned long hash_int(int key);
+
+//Test functions to see if everything is working:
+int ioopm_hash_table_has_key(ioopm_hash_table_t *ht, int key);
+char *ioopm_hash_table_get(ioopm_hash_table_t *ht, int key);
+
