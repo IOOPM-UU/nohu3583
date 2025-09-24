@@ -210,8 +210,9 @@ int ioopm_hash_table_size(ioopm_hash_table_t *ht){
     return count;
 }
 
-/// @brief clear all the entries in a hash table
+/// @brief checks if the hash table is empty
 /// @param h hash table operated upon
+/// @return true is size == 0, else false
 bool ioopm_hash_table_is_empty(ioopm_hash_table_t *ht){
     int amount = ioopm_hash_table_size(ht);
 
@@ -284,4 +285,42 @@ char **ioopm_hash_table_values(ioopm_hash_table_t *ht){
     }
 
     return values;
+}
+
+/// @brief check if a hash table has an entry with a given key
+/// @param h hash table operated upon
+/// @param key the key sought
+bool ioopm_hash_table_has_key(ioopm_hash_table_t *ht, int key){
+  int *keys = ioopm_hash_table_keys(ht);
+  int n_keys = ioopm_hash_table_size(ht);
+  
+  if (n_keys == 0) return;
+
+  for(int i = 0; i < n_keys; i++){
+      if(keys[i] == key){
+        free(keys);
+        return true;
+      }
+  }
+  free(keys);
+  return false;
+}
+
+/// @brief check if a hash table has an entry with a given value
+/// @param h hash table operated upon
+/// @param value the value sought
+bool ioopm_hash_table_has_value(ioopm_hash_table_t *ht, char *value){
+  int *values = ioopm_hash_table_values(ht);
+  int n_keys = ioopm_hash_table_size(ht);
+  
+  if (n_keys == 0) return;
+
+  for(int i = 0; i < n_keys; i++){
+      if(values[i] == value){
+        free(values);
+        return true;
+      }
+  }
+  free(values);
+  return false;
 }
