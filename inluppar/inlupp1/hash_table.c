@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <assert.h>
 
 typedef struct entry entry_t;
 
@@ -167,16 +168,39 @@ struct option
 
 option_t ioopm_hash_table_lookup(ioopm_hash_table_t *ht, int key)
 {
-    entry_t *tmp = find_previous_entry_for_key(&ht->buckets[key % 17], key);
-    entry_t *next = tmp->next;
+    entry_t *prev = find_previous_entry_for_key(&ht->buckets[key % 17], key);
 
-    if (next && next->value)
+    if (prev != NULL)
     {
-        return Success(next->value);
+        entry_t *curr = prev->next;
+        if (curr && curr->key == key && curr->value)
+        {
+            return Success(curr->value);
+        }
     }
-    else
+    return Failure();
+}
+// 1. Find the previous entry to the one we would like to remove
+//    1.1 If such an entry cannot be found, do nothing
+//    1.2 Otherwise, unlink the entry by updating the previous
+//        entry's next field so that it "skips over the entry" and
+//        return the memory that the entry reserved to the system so
+//        that it can be reused
+
+void ioopm_hash_table_remove(ioopm_hash_table_t *ht, int key)
+{
+    entry_t *prev = find_previous_entry_for_key(&ht->buckets[key % 17], key);
+
+    if (prev != NULL)
     {
-        return Failure();
+        entry_t *target = prev->next; 
+
+        if (target && target->key == key)
+        {
+            prev->next = target->next; 
+            // free(target->value);    
+            free(target);
+        }
     }
 }
 

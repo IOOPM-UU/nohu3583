@@ -1,4 +1,5 @@
 #pragma once
+#include <stdbool.h>
 
 /// ---------------------- Types ----------------------
 
@@ -41,4 +42,21 @@ unsigned long hash_int(int key);
 //Test functions to see if everything is working:
 int ioopm_hash_table_has_key(ioopm_hash_table_t *ht, int key);
 char *ioopm_hash_table_get(ioopm_hash_table_t *ht, int key);
+
+typedef struct option option_t;
+struct option
+{
+  bool success;
+  char *value;
+};
+
+#define Success(v)      (option_t){ .success = true,  .value = v }
+#define Failure()       (option_t){ .success = false, .value = NULL }
+#define Successful(o)   ((o).success == true)
+#define Unsuccessful(o) ((o).success == false)
+
+option_t ioopm_hash_table_lookup(ioopm_hash_table_t *ht, int key);
+void ioopm_hash_table_remove(ioopm_hash_table_t *ht, int key);
+
+
 

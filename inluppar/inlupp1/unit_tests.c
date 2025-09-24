@@ -1,5 +1,7 @@
 #include "CUnit/Basic.h"
 #include "hash_table.h"
+#include <assert.h>
+#include <string.h>
 
 int init_suite(void) { return 0; }
 int clean_suite(void) { return 0; }
@@ -27,6 +29,29 @@ void test_hash_insert()
     ioopm_hash_table_destroy(ht);
 }
 
+void test_hash_lookup_and_remove()
+{
+    ioopm_hash_table_t *ht = ioopm_hash_table_create();
+
+    // Insert key=8, value="b"
+    ioopm_hash_table_insert(ht, 8, "b");
+
+    // Lookup should succeed
+    option_t res = ioopm_hash_table_lookup(ht, 8);
+    assert(Successful(res));
+    assert(strcmp(res.value, "b") == 0);
+
+    // Remove key=8
+    ioopm_hash_table_remove(ht, 8);
+
+    // Lookup again should fail
+    option_t res2 = ioopm_hash_table_lookup(ht, 8);
+    assert(Unsuccessful(res2));
+
+    // Cleanup
+    ioopm_hash_table_destroy(ht);
+}
+
 int main()
 {
     if (CU_initialize_registry() != CUE_SUCCESS) return CU_get_error();
@@ -36,6 +61,9 @@ int main()
 
     if (!CU_add_test(suite, "Create/Destroy", test_create_destroy)) { CU_cleanup_registry(); return CU_get_error(); }
     if (!CU_add_test(suite, "Insert and Access", test_hash_insert)) { CU_cleanup_registry(); return CU_get_error(); }
+    if (!CU_add_test(suite, "Insert, then lookup and after destroy", test_hash_lookup_and_remove)) { CU_cleanup_registry(); return CU_get_error(); }
+
+    
 
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
