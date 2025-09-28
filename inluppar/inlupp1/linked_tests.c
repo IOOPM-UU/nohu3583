@@ -108,7 +108,7 @@ int main() {
     if (!suite) { CU_cleanup_registry(); return CU_get_error(); }
 
     CU_add_test(suite, "Create/Destroy", test_create_destroy);
-    // CU_add_test(suite, "Append and Prepend", test_append_prepend);
+    CU_add_test(suite, "Append and Prepend", test_append_prepend);
     CU_add_test(suite, "Insert and Remove", test_insert_remove);
     CU_add_test(suite, "Contains and Get", test_contains_and_get);
     CU_add_test(suite, "Predicate and Apply", test_predicate_functions);
