@@ -378,49 +378,49 @@ bool ioopm_hash_table_has_value_new(ioopm_hash_table_t *ht, char *value)
 
 //functions and predicate for testing new functions
 
-static bool is_uppercase(int key, char *value, void *x)
-{
-    (void)key;   // unused
-    (void)x; // unused
+// static bool is_uppercase(int key, char *value, void *x)
+// {
+//     (void)key;   // unused
+//     (void)x; // unused
 
-    for (char *p = value; p && *p; p++) {
-        if (!isupper((unsigned char)*p)) {
-            return false;
-        }
-    }
-    return true;
-}
+//     for (char *p = value; p && *p; p++) {
+//         if (!isupper((unsigned char)*p)) {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
-static bool is_lowercase(int key, char *value, void *x)
-{
-    (void)key;   
-    (void)x; 
+// static bool is_lowercase(int key, char *value, void *x)
+// {
+//     (void)key;   
+//     (void)x; 
 
-    for (char *p = value; p && *p; p++) {
-        if (isupper((unsigned char)*p)) {
-            return false;
-        }
-    }
-    return true;
-}
+//     for (char *p = value; p && *p; p++) {
+//         if (isupper((unsigned char)*p)) {
+//             return false;
+//         }
+//     }
+//     return true;
+// }
 
-static void to_upper(int key, char **value, void *x){
-    (void)key; 
-    (void)x;
+// static void to_upper(int key, char **value, void *x){
+//     (void)key; 
+//     (void)x;
 
-    for(char *p = *value; p && *p; p++){
-        *p = (char) toupper((unsigned char) *p);
-    }
-}
+//     for(char *p = *value; p && *p; p++){
+//         *p = (char) toupper((unsigned char) *p);
+//     }
+// }
 
-static void to_lower(int key, char **value, void *x){
-    (void)key; 
-    (void)x;
+// static void to_lower(int key, char **value, void *x){
+//     (void)key; 
+//     (void)x;
 
-    for(char *p = *value; p && *p; p++){
-        *p = (char) tolower((unsigned char) *p);
-    }
-}
+//     for(char *p = *value; p && *p; p++){
+//         *p = (char) tolower((unsigned char) *p);
+//     }
+// }
 void ioopm_hash_table_apply_to_all(ioopm_hash_table_t *ht, ioopm_apply_function *func, void *arg)
 {
     for (int i = 0; i < No_Buckets; i++) {
