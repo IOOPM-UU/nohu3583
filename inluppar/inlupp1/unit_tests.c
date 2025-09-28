@@ -4,6 +4,7 @@
   #include <assert.h>
   #include <string.h>
   #include <stdlib.h>
+  
 
   int init_suite(void) { return 0; }
   int clean_suite(void) { return 0; }
@@ -91,23 +92,24 @@
       ioopm_hash_table_insert(ht, 99, strdup("ninety-nine"));
 
       int n_keys = ioopm_hash_table_size(ht);
-      int *keys = ioopm_hash_table_keys(ht);
+      ioopm_list_t *keys = ioopm_hash_table_keys(ht);
 
       CU_ASSERT_EQUAL(n_keys, 3);
 
       bool found42 = false, found17 = false, found99 = false;
       for (int i = 0; i < n_keys; i++) {
-          if (keys[i] == 42) found42 = true;
-          if (keys[i] == 17) found17 = true;
-          if (keys[i] == 99) found99 = true;
+          if (ioopm_linked_list_get(keys, i) == 42) found42 = true;
+          if (ioopm_linked_list_get(keys, i) == 17) found17 = true;
+          if (ioopm_linked_list_get(keys, i) == 99) found99 = true;
       }
 
       CU_ASSERT_TRUE(found42);
       CU_ASSERT_TRUE(found17);
       CU_ASSERT_TRUE(found99);
 
-      free(keys);
       ioopm_hash_table_destroy(ht);
+      ioopm_linked_list_destroy(keys);
+      free(n_keys);
   }
 
   /// Test ioopm_hash_table_values
