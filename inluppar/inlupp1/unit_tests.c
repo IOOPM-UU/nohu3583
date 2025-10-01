@@ -22,25 +22,26 @@ void test_hash_insert()
     ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
     // Insert key=7, value="a"
-    ioopm_hash_table_insert(ht, int_elem(7), ptr_elem(strdup("a")));
+    ioopm_hash_table_insert(ht, int_elem(7), ptr_elem("a"));
     CU_ASSERT_TRUE(ioopm_hash_table_has_key(ht, int_elem(7)));
 
     elem_t val = ioopm_hash_table_get(ht, int_elem(7));
     CU_ASSERT_STRING_EQUAL(val.p, "a");
 
     // Insert same key → update value
-    ioopm_hash_table_insert(ht, int_elem(7), ptr_elem(strdup("b")));
+    ioopm_hash_table_insert(ht, int_elem(7), ptr_elem("b"));
     val = ioopm_hash_table_get(ht, int_elem(7));
     CU_ASSERT_STRING_EQUAL(val.p, "b");
 
     ioopm_hash_table_destroy(ht);
+    free(val.p);
 }
 
   void test_hash_lookup_and_remove()
   {
       ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
-      ioopm_hash_table_insert(ht, int_elem(8), ptr_elem(strdup("b")));
+      ioopm_hash_table_insert(ht, int_elem(8), ptr_elem("b"));
 
       option_t res = ioopm_hash_table_lookup(ht, int_elem(8));
       assert(Successful(res));
@@ -65,9 +66,9 @@ void test_hash_insert()
   void test_hash_size()
   {
       ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
-      ioopm_hash_table_insert(ht, int_elem(5), ptr_elem(strdup("A")));
-      ioopm_hash_table_insert(ht, int_elem(51), ptr_elem(strdup("B")));
-      ioopm_hash_table_insert(ht, int_elem(33), ptr_elem(strdup("C")));
+      ioopm_hash_table_insert(ht, int_elem(5), ptr_elem("A"));
+      ioopm_hash_table_insert(ht, int_elem(51), ptr_elem("B"));
+      ioopm_hash_table_insert(ht, int_elem(33), ptr_elem("C"));
 
       assert(ioopm_hash_table_size(ht) == 3);
       ioopm_hash_table_destroy(ht);
@@ -76,9 +77,9 @@ void test_hash_insert()
   void test_hash_clear()
   {
       ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
-      ioopm_hash_table_insert(ht, int_elem(5), ptr_elem(strdup("A")));
-      ioopm_hash_table_insert(ht, int_elem(51), ptr_elem(strdup("B")));
-      ioopm_hash_table_insert(ht, int_elem(33), ptr_elem(strdup("C")));
+      ioopm_hash_table_insert(ht, int_elem(5), ptr_elem("A"));
+      ioopm_hash_table_insert(ht, int_elem(51), ptr_elem("B"));
+      ioopm_hash_table_insert(ht, int_elem(33), ptr_elem("C"));
 
       assert(ioopm_hash_table_size(ht) == 3);
       ioopm_hash_table_clear(ht);
@@ -92,9 +93,9 @@ void test_hash_insert()
   {
       ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
-      ioopm_hash_table_insert(ht, int_elem(42), ptr_elem(strdup("answer")));
-      ioopm_hash_table_insert(ht, int_elem(17), ptr_elem(strdup("seventeen")));
-      ioopm_hash_table_insert(ht, int_elem(99), ptr_elem(strdup("ninety-nine")));
+      ioopm_hash_table_insert(ht, int_elem(42), ptr_elem("answer"));
+      ioopm_hash_table_insert(ht, int_elem(17), ptr_elem("seventeen"));
+      ioopm_hash_table_insert(ht, int_elem(99), ptr_elem("ninety-nine"));
 
       int n_keys = ioopm_hash_table_size(ht);
       ioopm_list_t *keys = ioopm_hash_table_keys(ht);
@@ -121,9 +122,9 @@ void test_hash_insert()
   {
       ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
-      ioopm_hash_table_insert(ht, int_elem(1), ptr_elem(strdup("afsas")));
-      ioopm_hash_table_insert(ht, int_elem(2), ptr_elem(strdup("kekka")));
-      ioopm_hash_table_insert(ht, int_elem(3), ptr_elem(strdup("241r12")));
+      ioopm_hash_table_insert(ht, int_elem(1), ptr_elem("afsas"));
+      ioopm_hash_table_insert(ht, int_elem(2), ptr_elem("kekka"));
+      ioopm_hash_table_insert(ht, int_elem(3), ptr_elem("241r12"));
 
       int n_values = ioopm_hash_table_size(ht);
       ioopm_list_t *values = ioopm_hash_table_values(ht);
@@ -141,7 +142,7 @@ void test_hash_insert()
       CU_ASSERT_TRUE(second);
       CU_ASSERT_TRUE(third);
 
-      free(values);
+      ioopm_linked_list_destroy(values);
       ioopm_hash_table_destroy(ht);
   }
 

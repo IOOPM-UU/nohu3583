@@ -51,12 +51,15 @@ all_tests: $(HASH_TARGET) $(LINKED_TARGET) $(ITERATOR_TARGET)
 # Memory checks
 memtest_hash: $(HASH_TARGET)
 	valgrind --leak-check=full ./$(HASH_TARGET)
+	make clean
 
 memtest_linked: $(LINKED_TARGET)
 	valgrind --leak-check=full ./$(LINKED_TARGET)
+	make clean
 
 memtest_iterator: $(ITERATOR_TARGET)
 	valgrind --leak-check=full ./$(ITERATOR_TARGET)
+	make clean
 
 # Run each test individually
 run_hash: $(HASH_TARGET)
