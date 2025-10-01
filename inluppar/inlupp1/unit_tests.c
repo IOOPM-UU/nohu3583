@@ -11,39 +11,44 @@
 
   void test_create_destroy()
   {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
+      ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
       CU_ASSERT_PTR_NOT_NULL(ht);
       ioopm_hash_table_destroy(ht);
   }
 
-  void test_hash_insert()
-  {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
+void test_hash_insert()
+{
+    // Integer keys, string values
+    ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
-      ioopm_hash_table_insert(ht, 7, strdup("a"));
-      CU_ASSERT_TRUE(ioopm_hash_table_has_key(ht, 7));
-      CU_ASSERT_STRING_EQUAL(ioopm_hash_table_get(ht, 7), "a");
+    // Insert key=7, value="a"
+    ioopm_hash_table_insert(ht, int_elem(7), ptr_elem(strdup("a")));
+    CU_ASSERT_TRUE(ioopm_hash_table_has_key(ht, int_elem(7)));
 
-      // Insert same key → update value
-      ioopm_hash_table_insert(ht, 7, strdup("b"));
-      CU_ASSERT_STRING_EQUAL(ioopm_hash_table_get(ht, 7), "b");
+    elem_t val = ioopm_hash_table_get(ht, int_elem(7));
+    CU_ASSERT_STRING_EQUAL(val.p, "a");
 
-      ioopm_hash_table_destroy(ht);
-  }
+    // Insert same key → update value
+    ioopm_hash_table_insert(ht, int_elem(7), ptr_elem(strdup("b")));
+    val = ioopm_hash_table_get(ht, int_elem(7));
+    CU_ASSERT_STRING_EQUAL(val.p, "b");
+
+    ioopm_hash_table_destroy(ht);
+}
 
   void test_hash_lookup_and_remove()
   {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
+      ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
-      ioopm_hash_table_insert(ht, 8, strdup("b"));
+      ioopm_hash_table_insert(ht, int_elem(8), ptr_elem(strdup("b")));
 
-      option_t res = ioopm_hash_table_lookup(ht, 8);
+      option_t res = ioopm_hash_table_lookup(ht, int_elem(8));
       assert(Successful(res));
-      assert(strcmp(res.value, "b") == 0);
+      assert(strcmp(res.value.p, "b") == 0);
 
-      ioopm_hash_table_remove(ht, 8);
+      ioopm_hash_table_remove(ht, int_elem(8));
 
-      option_t res2 = ioopm_hash_table_lookup(ht, 8);
+      option_t res2 = ioopm_hash_table_lookup(ht, int_elem(8));
       assert(Unsuccessful(res2));
 
       ioopm_hash_table_destroy(ht);
@@ -51,7 +56,7 @@
 
   void test_hash_empty()
   {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
+      ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
       bool result = ioopm_hash_table_is_empty(ht);
       assert(result == true);
       ioopm_hash_table_destroy(ht);
@@ -59,10 +64,10 @@
 
   void test_hash_size()
   {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
-      ioopm_hash_table_insert(ht, 5, strdup("A"));
-      ioopm_hash_table_insert(ht, 51, strdup("B"));
-      ioopm_hash_table_insert(ht, 33, strdup("C"));
+      ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
+      ioopm_hash_table_insert(ht, int_elem(5), ptr_elem(strdup("A")));
+      ioopm_hash_table_insert(ht, int_elem(51), ptr_elem(strdup("B")));
+      ioopm_hash_table_insert(ht, int_elem(33), ptr_elem(strdup("C")));
 
       assert(ioopm_hash_table_size(ht) == 3);
       ioopm_hash_table_destroy(ht);
@@ -70,10 +75,10 @@
 
   void test_hash_clear()
   {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
-      ioopm_hash_table_insert(ht, 5, strdup("A"));
-      ioopm_hash_table_insert(ht, 51, strdup("B"));
-      ioopm_hash_table_insert(ht, 33, strdup("C"));
+      ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
+      ioopm_hash_table_insert(ht, int_elem(5), ptr_elem(strdup("A")));
+      ioopm_hash_table_insert(ht, int_elem(51), ptr_elem(strdup("B")));
+      ioopm_hash_table_insert(ht, int_elem(33), ptr_elem(strdup("C")));
 
       assert(ioopm_hash_table_size(ht) == 3);
       ioopm_hash_table_clear(ht);
@@ -85,11 +90,11 @@
   /// Test ioopm_hash_table_keys
   void test_hash_table_keys(void)
   {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
+      ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
-      ioopm_hash_table_insert(ht, 42, strdup("answer"));
-      ioopm_hash_table_insert(ht, 17, strdup("seventeen"));
-      ioopm_hash_table_insert(ht, 99, strdup("ninety-nine"));
+      ioopm_hash_table_insert(ht, int_elem(42), ptr_elem(strdup("answer")));
+      ioopm_hash_table_insert(ht, int_elem(17), ptr_elem(strdup("seventeen")));
+      ioopm_hash_table_insert(ht, int_elem(99), ptr_elem(strdup("ninety-nine")));
 
       int n_keys = ioopm_hash_table_size(ht);
       ioopm_list_t *keys = ioopm_hash_table_keys(ht);
@@ -98,9 +103,9 @@
 
       bool found42 = false, found17 = false, found99 = false;
       for (int i = 0; i < n_keys; i++) {
-          if (ioopm_linked_list_get(keys, i) == 42) found42 = true;
-          if (ioopm_linked_list_get(keys, i) == 17) found17 = true;
-          if (ioopm_linked_list_get(keys, i) == 99) found99 = true;
+          if (ioopm_linked_list_get(keys, i).i == 42) found42 = true;
+          if (ioopm_linked_list_get(keys, i).i == 17) found17 = true;
+          if (ioopm_linked_list_get(keys, i).i == 99) found99 = true;
       }
 
       CU_ASSERT_TRUE(found42);
@@ -109,28 +114,27 @@
 
       ioopm_hash_table_destroy(ht);
       ioopm_linked_list_destroy(keys);
-      free(n_keys);
-  }
+}
 
   /// Test ioopm_hash_table_values
   void test_hash_table_values(void)
   {
-      ioopm_hash_table_t *ht = ioopm_hash_table_create();
+      ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
 
-      ioopm_hash_table_insert(ht, 1, strdup("afsas"));
-      ioopm_hash_table_insert(ht, 2, strdup("kekka"));
-      ioopm_hash_table_insert(ht, 3, strdup("241r12"));
+      ioopm_hash_table_insert(ht, int_elem(1), ptr_elem(strdup("afsas")));
+      ioopm_hash_table_insert(ht, int_elem(2), ptr_elem(strdup("kekka")));
+      ioopm_hash_table_insert(ht, int_elem(3), ptr_elem(strdup("241r12")));
 
       int n_values = ioopm_hash_table_size(ht);
-      char **values = ioopm_hash_table_values(ht);
+      ioopm_list_t *values = ioopm_hash_table_values(ht);
 
       CU_ASSERT_EQUAL(n_values, 3);
 
       bool first = false, second = false, third = false;
       for (int i = 0; i < n_values; i++) {
-          if (strcmp(values[i], "afsas") == 0) first = true;
-          if (strcmp(values[i], "kekka") == 0) second = true;
-          if (strcmp(values[i], "241r12") == 0) third = true;
+          if (strcmp(ioopm_linked_list_get(values, i).p, "afsas") == 0) first = true;
+          if (strcmp(ioopm_linked_list_get(values, i).p, "kekka") == 0) second = true;
+          if (strcmp(ioopm_linked_list_get(values, i).p, "241r12") == 0) third = true;
       }
 
       CU_ASSERT_TRUE(first);

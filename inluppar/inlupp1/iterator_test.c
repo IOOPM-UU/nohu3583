@@ -12,10 +12,10 @@ int clean_suite(void) { return 0; }
 //initalize a list for all the tests:
 
 ioopm_list_t *make_simple_list(void){
-    ioopm_list_t *list = ioopm_linked_list_create();
-    ioopm_linked_list_append(list, 10); // list is 10
-    ioopm_linked_list_append(list, 20); // list is 10, 20
-    ioopm_linked_list_prepend(list, 5); // list should be 5, 10, 20
+    ioopm_list_t *list = ioopm_linked_list_create(int_eq);
+    ioopm_linked_list_append(list, int_elem(10)); // list is 10
+    ioopm_linked_list_append(list, int_elem(20)); // list is 10, 20
+    ioopm_linked_list_prepend(list, int_elem(5)); // list should be 5, 10, 20
     return list;
 }
 
@@ -59,15 +59,15 @@ void test_insert(){
     ioopm_iterator_insert(iter, 8);
     CU_ASSERT_EQUAL(ioopm_linked_list_size(list), 4);
     CU_ASSERT_EQUAL(ioopm_iterator_current(iter), 8);
-    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 0), 8);  // original head changed to 8
-    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 1), 5);  // new element which makes this the second elem
+    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 0).i, 8);  // original head changed to 8
+    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 1).i, 5);  // new element which makes this the second elem
     ioopm_iterator_destroy(iter);
     ioopm_linked_list_destroy(list);
 
 }
 
 void test_empty_list_iterator() {
-    ioopm_list_t *list = ioopm_linked_list_create();
+    ioopm_list_t *list = ioopm_linked_list_create(int_eq);
     ioopm_list_iterator_t *iter = ioopm_list_iterator(list);
 
     CU_ASSERT_FALSE(ioopm_iterator_has_next(iter));
@@ -101,16 +101,16 @@ void test_iter_insert_edges() {
 
     // Insert at start (before current)
     ioopm_iterator_insert(iter, 1);
-    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 0), 1); // head changes to 1
-    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 1), 5); // new node before head
+    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 0).i, 1); // head changes to 1
+    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, 1).i, 5); // new node before head
 
     // Move to end
     while (ioopm_iterator_has_next(iter)) {
         ioopm_iterator_next(iter);
     }
     ioopm_iterator_insert(iter, 99);
-    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, ioopm_linked_list_size(list) - 2), 20);
-    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, ioopm_linked_list_size(list) - 1), 99);
+    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, ioopm_linked_list_size(list) - 2).i, 20);
+    CU_ASSERT_EQUAL(ioopm_linked_list_get(list, ioopm_linked_list_size(list) - 1).i, 99);
 
     ioopm_iterator_destroy(iter);
     ioopm_linked_list_destroy(list);

@@ -8,9 +8,9 @@ LINKED_TARGET    = linked_tests
 ITERATOR_TARGET  = iterator_test
 
 # Object files
-HASH_OBJS      = unit_tests.o hash_table.o linked_list.o
-LINKED_OBJS    = linked_tests.o linked_list.o
-ITERATOR_OBJS  = iterator_test.o iterator.o linked_list.o
+HASH_OBJS      = unit_tests.o hash_table.o linked_list.o common.o
+LINKED_OBJS    = linked_tests.o linked_list.o common.o
+ITERATOR_OBJS  = iterator_test.o iterator.o linked_list.o common.o
 
 # Default: build all
 all: $(HASH_TARGET) $(LINKED_TARGET) $(ITERATOR_TARGET)
@@ -34,12 +34,13 @@ $(ITERATOR_TARGET): $(ITERATOR_OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Special cases: if header missing in pattern rule
-unit_tests.o: unit_tests.c hash_table.h linked_list.h
-linked_tests.o: linked_tests.c linked_list.h
-iterator_test.o: iterator_test.c iterator.h linked_list.h
-iterator.o: iterator.c iterator.h linked_list.h
-hash_table.o: hash_table.c hash_table.h
-linked_list.o: linked_list.c linked_list.h
+unit_tests.o: unit_tests.c hash_table.h linked_list.h common.h
+linked_tests.o: linked_tests.c linked_list.h common.h
+iterator_test.o: iterator_test.c iterator.h linked_list.h common.h
+iterator.o: iterator.c iterator.h linked_list.h common.h
+hash_table.o: hash_table.c hash_table.h common.h
+linked_list.o: linked_list.c linked_list.h common.h
+common.o: common.c common.h
 
 # Run all test suites
 all_tests: $(HASH_TARGET) $(LINKED_TARGET) $(ITERATOR_TARGET)

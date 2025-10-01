@@ -2,8 +2,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "common.h"
 
-typedef int elem_t;
 
 typedef struct link ioopm_link_t;
 
@@ -16,12 +16,14 @@ typedef struct list {
     ioopm_link_t *head;   // first node
     ioopm_link_t *tail;   // last node;
     size_t size;    // number of elements
+    ioopm_eq_function *func; //boolean  euq function
 } ioopm_list_t;
 
 /// @brief Creates a new empty list
 /// @return an empty linked list
-ioopm_list_t *ioopm_linked_list_create(void){
+ioopm_list_t *ioopm_linked_list_create(ioopm_eq_function *eq_func){
     ioopm_list_t *list = calloc(1, sizeof(ioopm_list_t));
+    list->func = eq_func;
     return list;
 }
 
@@ -41,7 +43,7 @@ void ioopm_linked_list_destroy(ioopm_list_t *list) {
 /// @brief Insert at the end of a linked list in O(1) time
 /// @param list the linked list that will be appended
 /// @param value the value to be appended
-void ioopm_linked_list_append(ioopm_list_t *list, int value){
+void ioopm_linked_list_append(ioopm_list_t *list, elem_t value){
     ioopm_link_t *new_node = calloc(1, sizeof(ioopm_link_t));
     new_node->element = value;
     new_node->next = NULL; // since we add it in the last place in the list there will be nothing after
@@ -61,7 +63,7 @@ void ioopm_linked_list_append(ioopm_list_t *list, int value){
 /// @brief Insert at the front of a linked list in O(1) time
 /// @param list the linked list that will be prepended to
 /// @param value the value to be prepended
-void ioopm_linked_list_prepend(ioopm_list_t *list, int value) {
+void ioopm_linked_list_prepend(ioopm_list_t *list, elem_t value) {
     ioopm_link_t *new_node = calloc(1, sizeof(ioopm_link_t));
     new_node->element = value;
     new_node->next = list->head;
@@ -80,7 +82,7 @@ void ioopm_linked_list_prepend(ioopm_list_t *list, int value) {
 /// @brief Lookup the number of elements in the linked list in O(1) time
 /// @param list the linked list
 /// @return the number of elements in the list
-int ioopm_linked_list_size(ioopm_list_t *list){
+size_t ioopm_linked_list_size(ioopm_list_t *list){
     if (!list) return 0;
     return (int) list->size;
 }
@@ -92,7 +94,7 @@ int ioopm_linked_list_size(ioopm_list_t *list){
 /// @param list the linked list that will be extended
 /// @param index the position in the list
 /// @param value the value to be inserted 
-void ioopm_linked_list_insert(ioopm_list_t *list, int index, int value) {
+void ioopm_linked_list_insert(ioopm_list_t *list, int index, elem_t value) {
     int size = ioopm_linked_list_size(list);
 
     // Validate input
@@ -135,14 +137,14 @@ void ioopm_linked_list_insert(ioopm_list_t *list, int index, int value) {
 /// @param list the linked list
 /// @param index the position in the list
 /// @return the value removed
-int ioopm_linked_list_remove(ioopm_list_t *list, int index) {
+elem_t ioopm_linked_list_remove(ioopm_list_t *list, int index) {
     int size = ioopm_linked_list_size(list);
 
     if (index < 0 || index >= size) {
-        return 0; 
+        return (elem_t){ .p = NULL };
     }
 
-    int value;
+    elem_t value;
 
     if (index == 0) {
         ioopm_link_t *tmp = list->head;
@@ -177,11 +179,11 @@ int ioopm_linked_list_remove(ioopm_list_t *list, int index) {
 /// @param list the linked list that will be extended
 /// @param index the position in the list
 /// @return the value at the given position
-int ioopm_linked_list_get(ioopm_list_t *list, int index){
+elem_t ioopm_linked_list_get(ioopm_list_t *list, int index){
     int size = ioopm_linked_list_size(list);
     
     if (index < 0 || index >= size) {
-        return 0; 
+        return (elem_t){ .p = NULL };
     }
 
     ioopm_link_t *current = list->head;
@@ -195,11 +197,11 @@ int ioopm_linked_list_get(ioopm_list_t *list, int index){
 /// @param list the linked list
 /// @param element the element sought
 /// @return true if element is in the list, else false
-bool ioopm_linked_list_contains(ioopm_list_t *list, int element){
+bool ioopm_linked_list_contains(ioopm_list_t *list, elem_t element){
     ioopm_link_t *current = list->head;
 
     while (current != NULL){
-        if(current->element == element) {
+        if(list->func(current->element, element)) {
             return true;
         }
         current = current->next;
@@ -239,11 +241,11 @@ typedef void ioopm_apply_int_function(int *value, void *extra);
 /// @param prop the property to be tested (function pointer)
 /// @param extra an additional argument (may be NULL) that will be passed to all internal calls of prop
 /// @return true if prop holds for all elements in the list, else false
-bool ioopm_linked_list_all(ioopm_list_t *list, ioopm_int_predicate prop, void *extra) {
+bool ioopm_linked_list_all(ioopm_list_t *list, ioopm_predicate prop, void *extra) {
     ioopm_link_t *current = list->head;
 
     while (current != NULL) {
-        if (!prop(current->element, extra)) {
+        if (!prop(current->element ,current->element, extra)) {
             return false; // property failed, bail early
         }
         current = current->next;
@@ -257,29 +259,29 @@ bool ioopm_linked_list_all(ioopm_list_t *list, ioopm_int_predicate prop, void *e
 /// @param prop the property to be tested
 /// @param extra an additional argument (may be NULL) that will be passed to all internal calls of prop
 /// @return true if prop holds for any elements in the list, else false
-bool ioopm_linked_list_any(ioopm_list_t *list, ioopm_int_predicate *prop, void *extra){
+bool ioopm_linked_list_any(ioopm_list_t *list, ioopm_predicate *prop, void *extra){
     ioopm_link_t *current = list->head;
 
     while (current != NULL)
     {
-        if(prop(current->element, extra)){
+        if(prop(current->element, current->element, extra)){
             return true;
         }
         current = current->next;
     }
-    return false; // <-- FIXED (used to wrongly return true)
+    return false; 
 }
 
 /// @brief Apply a supplied function to all elements in a list.
 /// @param list the linked list
 /// @param fun the function to be applied
 /// @param extra an additional argument (may be NULL) that will be passed to all internal calls of fun
-void ioopm_linked_list_apply_to_all(ioopm_list_t *list, ioopm_apply_int_function *fun, void *extra){
+void ioopm_linked_list_apply_to_all(ioopm_list_t *list, ioopm_apply_function *fun, void *extra){
     ioopm_link_t *current = list->head;
 
     while (current != NULL)
     {
-        fun(&current->element, extra);
+        fun(current->element, &current->element, extra);
         current = current->next;
     }
     return;
