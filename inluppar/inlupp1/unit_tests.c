@@ -34,7 +34,6 @@ void test_hash_insert()
     CU_ASSERT_STRING_EQUAL(val.p, "b");
 
     ioopm_hash_table_destroy(ht);
-    free(val.p);
 }
 
   void test_hash_lookup_and_remove()
@@ -146,6 +145,48 @@ void test_hash_insert()
       ioopm_hash_table_destroy(ht);
   }
 
+
+  void test_remove_nonexistent_key()
+{
+    ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
+    ioopm_hash_table_insert(ht, int_elem(1), ptr_elem("one"));
+    ioopm_hash_table_remove(ht, int_elem(999)); // Should not crash or affect table
+    CU_ASSERT_TRUE(ioopm_hash_table_has_key(ht, int_elem(1)));
+    ioopm_hash_table_destroy(ht);
+}
+
+void test_duplicate_keys(void) {
+    ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
+    elem_t key = int_elem(1);
+    elem_t value1 = int_elem(10);
+    elem_t value2 = int_elem(20);
+
+    ioopm_hash_table_insert(ht, key, value1);
+    ioopm_hash_table_insert(ht, key, value2);
+
+    option_t result = ioopm_hash_table_lookup(ht, key);
+    CU_ASSERT_TRUE(result.success);
+    CU_ASSERT_EQUAL(result.value.i, 20);
+
+    ioopm_hash_table_destroy(ht);
+}
+
+void test_has_key_and_value(void) {
+    ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
+    elem_t key = int_elem(1);
+    elem_t value = int_elem(10);
+
+    ioopm_hash_table_insert(ht, key, value);
+
+    CU_ASSERT_TRUE(ioopm_hash_table_has_key(ht, key));
+    CU_ASSERT_TRUE(ioopm_hash_table_has_value(ht, value));
+
+    CU_ASSERT_FALSE(ioopm_hash_table_has_key(ht, int_elem(2)));
+    CU_ASSERT_FALSE(ioopm_hash_table_has_value(ht, int_elem(20)));
+
+    ioopm_hash_table_destroy(ht);
+}
+
   int main()
   {
       if (CU_initialize_registry() != CUE_SUCCESS) return CU_get_error();
@@ -161,6 +202,10 @@ void test_hash_insert()
       CU_add_test(suite, "Test hash clear", test_hash_clear);
       CU_add_test(suite, "Get hash values", test_hash_table_keys);
       CU_add_test(suite, "Get hash keys", test_hash_table_values);
+      CU_add_test(suite, "Remove non existant key", test_remove_nonexistent_key); 
+      CU_add_test(suite, "Test adding on same key", test_duplicate_keys); 
+      CU_add_test(suite, "Has key and value test", test_has_key_and_value); 
+
 
       CU_basic_set_mode(CU_BRM_VERBOSE);
       CU_basic_run_tests();

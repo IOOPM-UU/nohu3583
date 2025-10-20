@@ -3,21 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "common.h"
+#include "linked_list.h"
 
 
-typedef struct link ioopm_link_t;
-
-struct link {
-    elem_t element;
-    ioopm_link_t *next;
-};
-
-typedef struct list {
-    ioopm_link_t *head;   // first node
-    ioopm_link_t *tail;   // last node;
-    size_t size;    // number of elements
-    ioopm_eq_function *func; //boolean  euq function
-} ioopm_list_t;
 
 /// @brief Creates a new empty list
 /// @return an empty linked list
@@ -83,8 +71,7 @@ void ioopm_linked_list_prepend(ioopm_list_t *list, elem_t value) {
 /// @param list the linked list
 /// @return the number of elements in the list
 size_t ioopm_linked_list_size(ioopm_list_t *list){
-    if (!list) return 0;
-    return (int) list->size;
+    return list->size;
 }
 
 /// @brief Insert an element into a linked list in O(n) time.

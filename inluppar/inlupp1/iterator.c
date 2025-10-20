@@ -6,11 +6,6 @@
 #include "common.h"
 
 
-struct link {
-    elem_t element;
-    ioopm_link_t *next;
-};
-
 
 /// @brief Iterator structure for the linked list
 typedef struct iterator {
@@ -18,6 +13,7 @@ typedef struct iterator {
     ioopm_link_t *current;  // current node in iteration
     ioopm_link_t *prev;     // previous node (needed for remove)
 } ioopm_list_iterator_t;
+
 
 /// @brief Create an iterator for a given list
 ioopm_list_iterator_t *ioopm_list_iterator(ioopm_list_t *list) {
@@ -30,12 +26,13 @@ ioopm_list_iterator_t *ioopm_list_iterator(ioopm_list_t *list) {
 
 /// @brief Checks if there are more elements to iterate over
 bool ioopm_iterator_has_next(ioopm_list_iterator_t *iter) {
-    return iter->current != NULL;
+    if (!iter || !iter->current) return false;
+    return iter->current->next != NULL;  // Check if there's a NEXT element
 }
 
 /// @brief Step the iterator forward one step
 elem_t ioopm_iterator_next(ioopm_list_iterator_t *iter) {
-    if (!iter->current) return (elem_t){ .p = NULL };
+    if (!iter || !iter->current) return (elem_t){ .p = NULL };  // FIXED
     elem_t val = iter->current->element;
     iter->prev = iter->current;
     iter->current = iter->current->next;
@@ -44,52 +41,51 @@ elem_t ioopm_iterator_next(ioopm_list_iterator_t *iter) {
 
 /// @brief Return the current element from the underlying list
 elem_t ioopm_iterator_current(ioopm_list_iterator_t *iter) {
-    if (!iter->current) return (elem_t){ .p = NULL };
+    if (!iter || !iter->current) return (elem_t){ .p = NULL };  // FIXED
     return iter->current->element;
 }
 
 /// @brief Reposition the iterator at the start of the underlying list
 void ioopm_iterator_reset(ioopm_list_iterator_t *iter) {
+    if (!iter) return;  // ADDED
     iter->current = iter->list->head;
     iter->prev = NULL;
 }
 
 /// @brief Remove the current element from the underlying list
 elem_t ioopm_iterator_remove(ioopm_list_iterator_t *iter){
-    if (!iter->current) return (elem_t){ .p = NULL };
+    if (!iter || !iter->current) return (elem_t){ .p = NULL };  // FIXED
 
     ioopm_link_t *remove = iter->current;
     elem_t elem = remove->element;
 
     if (ioopm_linked_list_size(iter->list) == 1) {
-        ioopm_linked_list_clear(iter->list);
+        // Handle single element case directly
+        iter->list->head = NULL;
+        iter->list->tail = NULL;
         iter->current = NULL;
         iter->prev = NULL;
-        return elem;
-    }
-
-    ioopm_link_t *next_node = remove->next;
-
-    if (iter->prev == NULL) { // removing head
-        iter->list->head = next_node;
-        if (remove == iter->list->tail) {
-            iter->list->tail = NULL;
-        }
-    } else { // removing middle or tail
-        iter->prev->next = next_node;
+    } else if (iter->prev == NULL) {
+        // Removing head
+        iter->list->head = remove->next;
+        iter->current = remove->next;
+    } else {
+        // Removing middle or tail
+        iter->prev->next = remove->next;
+        iter->current = remove->next;
         if (remove == iter->list->tail) {
             iter->list->tail = iter->prev;
         }
     }
 
     free(remove);
-    iter->current = next_node;
     iter->list->size--;
     return elem;
 }
 
 /// @brief Insert a new element into the underlying list making the current element it's next
 void ioopm_iterator_insert(ioopm_list_iterator_t *iter, elem_t element) {
+    if(!iter) return;
     ioopm_link_t *new_node = calloc(1, sizeof(ioopm_link_t));
     new_node->element = element;
 
@@ -101,12 +97,13 @@ void ioopm_iterator_insert(ioopm_list_iterator_t *iter, elem_t element) {
         new_node->next = iter->current;
         iter->list->head = new_node;
         iter->current = new_node;
-    } else { // insert in middle or before tail
+    } else if (iter->current == NULL) { // insert at end  <-- ADD THIS CASE
+        iter->prev->next = new_node;
+        iter->list->tail = new_node;
+        iter->current = new_node;
+    } else { // insert in middle
         new_node->next = iter->current;
         iter->prev->next = new_node;
-        if (iter->prev == iter->list->tail) { // update tail if needed
-            iter->list->tail = new_node;
-        }
         iter->current = new_node;
     }
 
@@ -115,5 +112,6 @@ void ioopm_iterator_insert(ioopm_list_iterator_t *iter, elem_t element) {
 
 /// @brief Destroy the iterator and return its resources
 void ioopm_iterator_destroy(ioopm_list_iterator_t *iter){
+    if (!iter) return;  // ADDED
     free(iter);
 }

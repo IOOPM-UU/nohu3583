@@ -4,13 +4,17 @@
 
 typedef struct link ioopm_link_t;
 
+struct link {
+    elem_t element;
+    ioopm_link_t *next;
+};
+
 typedef struct list {
     ioopm_link_t *head;   // first node
     ioopm_link_t *tail;   // last node;
     size_t size;    // number of elements
     ioopm_eq_function *func; //boolean  euq function
 } ioopm_list_t;
-
 /// @brief Creates a new empty list
 /// @return an empty linked list
 ioopm_list_t *ioopm_linked_list_create(ioopm_eq_function *eq_func);
@@ -44,7 +48,7 @@ void ioopm_linked_list_insert(ioopm_list_t *list, int index, elem_t value);
 /// @param list the linked list
 /// @param index the position in the list
 /// @return the value removed
-elem_t ioopm_linked_list_remove(ioopm_list_t *list, elem_t index);
+elem_t ioopm_linked_list_remove(ioopm_list_t *list, int index);
 
 /// @brief Retrieve an element from a linked list in O(n) time.
 /// The valid values of index are [0,n-1] for a list of n elements,

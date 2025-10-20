@@ -2,6 +2,29 @@
 #include <stdbool.h>
 #include "linked_list.h"
 
+    #define No_Buckets 17 
+
+
+
+    typedef struct entry entry_t;
+
+    struct entry
+    {
+        elem_t key;       // holds the key
+        elem_t value;     // holds the value
+        entry_t *next;    // points to the next entry (possibly NULL)
+    };
+
+    typedef struct hash_table
+    {
+        entry_t buckets[No_Buckets]; // dummy heads for each bucket
+        ioopm_hash_func *func;
+        ioopm_eq_function *eq_func;
+        size_t size;
+        bool should_free_keys;
+
+    } ioopm_hash_table_t;
+
 /// ---------------------- Types ----------------------
 
 // Forward declaration of internal entry struct
@@ -102,4 +125,7 @@ bool ioopm_hash_table_any(ioopm_hash_table_t *ht, ioopm_predicate *pred, void *a
 /// @param apply_fun the function to be applied to all elements
 /// @param arg extra argument to apply_fun
 void ioopm_hash_table_apply_to_all(ioopm_hash_table_t *ht, ioopm_apply_function *apply_fun, void *arg);
+
+void ioopm_hash_table_insert_freq(ioopm_hash_table_t *ht, elem_t key);
+
 

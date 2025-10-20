@@ -196,6 +196,24 @@ void event_loop(item_t *db, int *db_size) {
 }
 
 
+char *trim(char *str)
+{
+  char *start = str;
+  char *end = start + strlen(str)-1;
+
+  while (isspace(*start)) ++start;
+  while (isspace(*end)) --end;
+
+  char *cursor = str;
+  for (; start <= end; ++start, ++cursor)
+    {
+      *cursor = *start;
+    }
+  *cursor = '\0';
+
+  return str;
+}
+
 int main(void){
     item_t db[16]; // Array med plats för 16 varor
     int db_siz = 0; // Antalet varor i arrayen just nu

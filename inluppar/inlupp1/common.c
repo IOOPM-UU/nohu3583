@@ -1,9 +1,14 @@
 #include "common.h"
 #include <string.h>
 
+
+
 // === Equality functions ===
 bool int_eq(elem_t a, elem_t b) { return a.i == b.i; }
-bool str_eq(elem_t a, elem_t b) { return strcmp(a.p, b.p) == 0; }
+bool str_eq(elem_t a, elem_t b)
+{
+    return strcmp((char *)a.p, (char *)b.p) == 0;
+}
 bool ptr_eq(elem_t a, elem_t b) { return a.p == b.p; }
 
 // === Hash functions ===
