@@ -14,6 +14,7 @@ typedef struct merch {
     int price;
     ioopm_list_t *locations; // list of stock_t*
     int total_stock;
+    int reserved;
 } merch_t;
 
 typedef struct cart {
