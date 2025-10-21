@@ -4,23 +4,21 @@
 
 /// Represents a stock item on a specific shelf
 typedef struct stock {
-    elem_t shelf;      // e.g. str_elem("A15")
-    int quantity;   // int_elem(42)
+    char *shelf;      
+    int quantity;
 } stock_t; 
 
-/// Represents one merchandise entry in the store
 typedef struct merch {
-    elem_t name;       // str_elem("Apple")
-    elem_t desc;       // str_elem("Fresh fruit")
-    int price;      // int_elem(10)
-    ioopm_list_t *locations; // list of stock_t* (each shelf)
+    char *name;       
+    char *desc;       
+    int price;
+    ioopm_list_t *locations; // list of stock_t*
     int total_stock;
 } merch_t;
 
-/// Represents a shopping cart
 typedef struct cart {
-    int id;                  // int_elem(cart_id)
-    ioopm_hash_table_t *items;  // name -> quantity (elem_t->elem_t) // hash map, namn.
+    int id;
+    ioopm_hash_table_t *items;  // name -> quantity
 } cart_t;
 
 // typedef enum {

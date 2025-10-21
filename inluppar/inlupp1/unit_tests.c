@@ -187,6 +187,32 @@ void test_has_key_and_value(void) {
     ioopm_hash_table_destroy(ht);
 }
 
+bool is_greater_than(elem_t key, elem_t value, void *arg) {
+    int threshold = *(int*)arg;
+    return value.i > threshold;
+}
+
+void test_ioopm_hash_table_any(void) {
+    ioopm_hash_table_t *ht = ioopm_hash_table_create(hash_int, int_eq);
+
+    // Insert some test data
+    ioopm_hash_table_insert(ht, int_elem(1), int_elem(10));
+    ioopm_hash_table_insert(ht, int_elem(2), int_elem(20));
+    ioopm_hash_table_insert(ht, int_elem(3), int_elem(30));
+
+    int threshold = 25;
+    bool result = ioopm_hash_table_any(ht, is_greater_than, &threshold);
+
+    assert(result == true); // Because 30 > 25
+
+    threshold = 35;
+    result = ioopm_hash_table_any(ht, is_greater_than, &threshold);
+
+    assert(result == false); // No value > 35
+
+    ioopm_hash_table_destroy(ht);
+}
+
   int main()
   {
       if (CU_initialize_registry() != CUE_SUCCESS) return CU_get_error();
@@ -205,6 +231,8 @@ void test_has_key_and_value(void) {
       CU_add_test(suite, "Remove non existant key", test_remove_nonexistent_key); 
       CU_add_test(suite, "Test adding on same key", test_duplicate_keys); 
       CU_add_test(suite, "Has key and value test", test_has_key_and_value); 
+      CU_add_test(suite, "Test any using greater than", test_ioopm_hash_table_any); 
+
 
 
       CU_basic_set_mode(CU_BRM_VERBOSE);

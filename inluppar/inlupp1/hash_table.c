@@ -8,7 +8,7 @@
     #include "common.h"
     #include "hash_table.h"
 
-    #define No_Buckets 17 
+    #define No_Buckets 4507  
 
 
     /// Find the previous entry for a given key in a bucket

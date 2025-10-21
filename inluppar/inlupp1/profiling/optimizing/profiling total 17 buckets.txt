@@ -1,0 +1,298 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 51.36     31.82    31.82  4296000     0.01     0.01  ioopm_linked_list_get
+ 17.79     42.84    11.02  8592000     0.00     0.00  find_previous_entry_for_key
+ 10.70     49.47     6.63 28019000     0.00     0.00  ioopm_hash_table_insert_freq
+ 10.03     55.69     6.21 2758501000     0.00     0.00  str_eq
+  3.70     57.98     2.29 40907000     0.00     0.00  hash_str
+  1.31     58.78     0.81                             _init
+  1.16     59.51     0.72                             ptr_eq
+  0.79     59.99     0.49 28019000     0.00     0.00  lowercase_inplace
+  0.63     60.38     0.39                             main
+  0.50     60.70     0.31     4000     0.08     3.44  process_file
+  0.34     60.91     0.21  4296000     0.00     0.00  ioopm_hash_table_lookup
+  0.33     61.11     0.20                             int_eq
+  0.26     61.27     0.16                             cmp_str
+  0.24     61.42     0.15 28019000     0.00     0.00  process_word
+  0.21     61.55     0.13  4296000     0.00     0.00  ioopm_hash_table_remove
+  0.19     61.66     0.12  4296000     0.00     0.00  print_key_frequency
+  0.15     61.76     0.09     1000     0.09     0.10  ioopm_hash_table_keys
+  0.13     61.84     0.08     1000     0.08    32.01  get_keys
+  0.06     61.88     0.04  4296000     0.00     0.00  entry_input
+  0.06     61.91     0.04     1000     0.04     0.04  sort_keys
+  0.02     61.92     0.01  4296000     0.00     0.00  ioopm_linked_list_append
+  0.02     61.93     0.01     1000     0.01     0.01  ioopm_linked_list_destroy
+  0.02     61.94     0.01                             hash_int
+  0.02     61.95     0.01                             ioopm_hash_table_get
+  0.00     61.95     0.00  4296000     0.00     0.00  ioopm_linked_list_size
+  0.00     61.95     0.00     1000     0.00     0.00  ioopm_hash_table_create
+  0.00     61.95     0.00     1000     0.00     0.00  ioopm_hash_table_destroy
+  0.00     61.95     0.00     1000     0.00     0.00  ioopm_hash_table_size
+  0.00     61.95     0.00     1000     0.00     0.00  ioopm_linked_list_create
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2024 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.02% of 61.95 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     96.9    0.39   59.65                 main [1]
+                0.08   31.93    1000/1000        get_keys [2]
+                0.31   13.46    4000/4000        process_file [4]
+                0.12    6.90 4296000/4296000     print_key_frequency [8]
+                0.13    6.69 4296000/4296000     ioopm_hash_table_remove [10]
+                0.04    0.00    1000/1000        sort_keys [20]
+                0.00    0.00    1000/1000        ioopm_hash_table_create [26]
+                0.00    0.00    1000/1000        ioopm_hash_table_destroy [27]
+-----------------------------------------------
+                0.08   31.93    1000/1000        main [1]
+[2]     51.7    0.08   31.93    1000         get_keys [2]
+               31.82    0.00 4296000/4296000     ioopm_linked_list_get [3]
+                0.09    0.01    1000/1000        ioopm_hash_table_keys [19]
+                0.01    0.00    1000/1000        ioopm_linked_list_destroy [22]
+-----------------------------------------------
+               31.82    0.00 4296000/4296000     get_keys [2]
+[3]     51.4   31.82    0.00 4296000         ioopm_linked_list_get [3]
+                0.00    0.00 4296000/4296000     ioopm_linked_list_size [25]
+-----------------------------------------------
+                0.31   13.46    4000/4000        main [1]
+[4]     22.2    0.31   13.46    4000         process_file [4]
+                0.15   13.31 28019000/28019000     process_word [5]
+-----------------------------------------------
+                0.15   13.31 28019000/28019000     process_file [4]
+[5]     21.7    0.15   13.31 28019000         process_word [5]
+                6.63    6.19 28019000/28019000     ioopm_hash_table_insert_freq [7]
+                0.49    0.00 28019000/28019000     lowercase_inplace [15]
+-----------------------------------------------
+                5.51    0.93 4296000/8592000     ioopm_hash_table_lookup [9]
+                5.51    0.93 4296000/8592000     ioopm_hash_table_remove [10]
+[6]     20.8   11.02    1.86 8592000         find_previous_entry_for_key [6]
+                1.86    0.00 825014000/2758501000     str_eq [11]
+-----------------------------------------------
+                6.63    6.19 28019000/28019000     process_word [5]
+[7]     20.7    6.63    6.19 28019000         ioopm_hash_table_insert_freq [7]
+                4.34    0.00 1924895000/2758501000     str_eq [11]
+                1.57    0.00 28019000/40907000     hash_str [12]
+                0.04    0.24 4296000/4296000     entry_input [16]
+-----------------------------------------------
+                0.12    6.90 4296000/4296000     main [1]
+[8]     11.3    0.12    6.90 4296000         print_key_frequency [8]
+                0.21    6.69 4296000/4296000     ioopm_hash_table_lookup [9]
+-----------------------------------------------
+                0.21    6.69 4296000/4296000     print_key_frequency [8]
+[9]     11.1    0.21    6.69 4296000         ioopm_hash_table_lookup [9]
+                5.51    0.93 4296000/8592000     find_previous_entry_for_key [6]
+                0.24    0.00 4296000/40907000     hash_str [12]
+                0.01    0.00 4296000/2758501000     str_eq [11]
+-----------------------------------------------
+                0.13    6.69 4296000/4296000     main [1]
+[10]    11.0    0.13    6.69 4296000         ioopm_hash_table_remove [10]
+                5.51    0.93 4296000/8592000     find_previous_entry_for_key [6]
+                0.24    0.00 4296000/40907000     hash_str [12]
+                0.01    0.00 4296000/2758501000     str_eq [11]
+-----------------------------------------------
+                0.01    0.00 4296000/2758501000     ioopm_hash_table_lookup [9]
+                0.01    0.00 4296000/2758501000     ioopm_hash_table_remove [10]
+                1.86    0.00 825014000/2758501000     find_previous_entry_for_key [6]
+                4.34    0.00 1924895000/2758501000     ioopm_hash_table_insert_freq [7]
+[11]    10.0    6.21    0.00 2758501000         str_eq [11]
+-----------------------------------------------
+                0.24    0.00 4296000/40907000     entry_input [16]
+                0.24    0.00 4296000/40907000     ioopm_hash_table_lookup [9]
+                0.24    0.00 4296000/40907000     ioopm_hash_table_remove [10]
+                1.57    0.00 28019000/40907000     ioopm_hash_table_insert_freq [7]
+[12]     3.7    2.29    0.00 40907000         hash_str [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     1.3    0.81    0.00                 _init [13]
+-----------------------------------------------
+                                                 <spontaneous>
+[14]     1.2    0.72    0.00                 ptr_eq [14]
+-----------------------------------------------
+                0.49    0.00 28019000/28019000     process_word [5]
+[15]     0.8    0.49    0.00 28019000         lowercase_inplace [15]
+-----------------------------------------------
+                0.04    0.24 4296000/4296000     ioopm_hash_table_insert_freq [7]
+[16]     0.5    0.04    0.24 4296000         entry_input [16]
+                0.24    0.00 4296000/40907000     hash_str [12]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     0.3    0.20    0.00                 int_eq [17]
+-----------------------------------------------
+                                                 <spontaneous>
+[18]     0.3    0.16    0.00                 cmp_str [18]
+-----------------------------------------------
+                0.09    0.01    1000/1000        get_keys [2]
+[19]     0.2    0.09    0.01    1000         ioopm_hash_table_keys [19]
+                0.01    0.00 4296000/4296000     ioopm_linked_list_append [21]
+                0.00    0.00    1000/1000        ioopm_hash_table_size [28]
+                0.00    0.00    1000/1000        ioopm_linked_list_create [29]
+-----------------------------------------------
+                0.04    0.00    1000/1000        main [1]
+[20]     0.1    0.04    0.00    1000         sort_keys [20]
+-----------------------------------------------
+                0.01    0.00 4296000/4296000     ioopm_hash_table_keys [19]
+[21]     0.0    0.01    0.00 4296000         ioopm_linked_list_append [21]
+-----------------------------------------------
+                0.01    0.00    1000/1000        get_keys [2]
+[22]     0.0    0.01    0.00    1000         ioopm_linked_list_destroy [22]
+-----------------------------------------------
+                                                 <spontaneous>
+[23]     0.0    0.01    0.00                 hash_int [23]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     0.0    0.01    0.00                 ioopm_hash_table_get [24]
+-----------------------------------------------
+                0.00    0.00 4296000/4296000     ioopm_linked_list_get [3]
+[25]     0.0    0.00    0.00 4296000         ioopm_linked_list_size [25]
+-----------------------------------------------
+                0.00    0.00    1000/1000        main [1]
+[26]     0.0    0.00    0.00    1000         ioopm_hash_table_create [26]
+-----------------------------------------------
+                0.00    0.00    1000/1000        main [1]
+[27]     0.0    0.00    0.00    1000         ioopm_hash_table_destroy [27]
+-----------------------------------------------
+                0.00    0.00    1000/1000        ioopm_hash_table_keys [19]
+[28]     0.0    0.00    0.00    1000         ioopm_hash_table_size [28]
+-----------------------------------------------
+                0.00    0.00    1000/1000        ioopm_hash_table_keys [19]
+[29]     0.0    0.00    0.00    1000         ioopm_linked_list_create [29]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2024 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [13] _init                  [24] ioopm_hash_table_get   [25] ioopm_linked_list_size
+  [18] cmp_str                 [7] ioopm_hash_table_insert_freq [15] lowercase_inplace
+  [16] entry_input            [19] ioopm_hash_table_keys   [1] main
+   [6] find_previous_entry_for_key [9] ioopm_hash_table_lookup [8] print_key_frequency
+   [2] get_keys               [10] ioopm_hash_table_remove [4] process_file
+  [23] hash_int               [28] ioopm_hash_table_size   [5] process_word
+  [12] hash_str               [21] ioopm_linked_list_append [14] ptr_eq
+  [17] int_eq                 [29] ioopm_linked_list_create [20] sort_keys
+  [26] ioopm_hash_table_create [22] ioopm_linked_list_destroy [11] str_eq
+  [27] ioopm_hash_table_destroy [3] ioopm_linked_list_get
