@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
                 ioopm_hash_table_remove(ht, keys[i]);
                 free(keys[i].p);  // Free the strdup'ed string
             }
-            free(keys);
+            free(keys); 
         }
 
         // Destroy hash table (now empty, so no leaks)

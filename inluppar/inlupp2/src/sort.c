@@ -39,14 +39,10 @@ int cmp_str_num(const void *a, const void *b)
 // Convert hash table keys into a sorted array
 elem_t *get_keys(ioopm_hash_table_t *ht)
 {
+
     ioopm_list_t *keys_list = ioopm_hash_table_keys(ht);
     size_t size = keys_list->size;
 
-    if (size == 0)
-    {
-        ioopm_linked_list_destroy(keys_list);
-        return NULL;
-    }
 
     elem_t *arr = calloc(size, sizeof(elem_t));
     for (size_t i = 0; i < size; i++)
@@ -68,4 +64,5 @@ elem_t *sort_keys(elem_t *arr, size_t size)
 
 elem_t *sort_stock(elem_t *arr, size_t size){
     qsort(arr,size, sizeof(elem_t), cmp_str_num);
+    return arr;
 }

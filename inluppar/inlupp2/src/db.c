@@ -1,34 +1,34 @@
-// db.c  -- patched version with consistent strdup-on-insert ownership policy
-
-#include "db.h"
+#define _POSIX_C_SOURCE 200809L
 #include "linked_list.h"
 #include "hash_table.h"
 #include "sort.h"
+#include "db.h"
 
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 /* Helper: insert a duplicated key into a hash table.
- * The function strdup's the key so the hash table owns its copy.
- */
+* The function strdup's the key so the hash table owns its copy.
+*/
 static void hash_insert_dup(ioopm_hash_table_t *ht, const char *key, elem_t value)
 {
     char *kdup = strdup(key);
     ioopm_hash_table_insert(ht, ptr_elem(kdup), value);
+
 }
 
-/* Helper: remove old_key from ht (frees its duplicate key if ht->should_free_keys)
- * and insert new_key (duplicated) with given value.
- * Must be done since the new name could be hashed into a new bucket. If we want to look in the real bucket using hash_str it wont work if we dont remove then add.
- */
-static bool hash_rekey(ioopm_hash_table_t *ht, const char *old_key, const char *new_key, elem_t value)
-{
-    ioopm_hash_table_remove(ht, ptr_elem((char*)old_key)); // remove old duplicate key
-    char *kdup = strdup(new_key);
-    ioopm_hash_table_insert(ht, ptr_elem(kdup), value);
-    return true;
-}
+// /* Helper: remove old_key from ht (frees its duplicate key if ht->should_free_keys)
+// * and insert new_key (duplicated) with given value.
+// * Must be done since the new name could be hashed into a new bucket. If we want to look in the real bucket using hash_str it wont work if we dont remove then add.
+// */
+// static bool hash_rekey(ioopm_hash_table_t *ht, const char *old_key, const char *new_key, elem_t value)
+// {
+//     ioopm_hash_table_remove(ht, ptr_elem((char*)old_key)); // remove old duplicate key
+//     char *kdup = strdup(new_key);
+//     ioopm_hash_table_insert(ht, ptr_elem(kdup), value);
+//     return true;
+// }
 
 /* Create / destroy database */
 db_t *create_db(void) {
@@ -47,8 +47,8 @@ db_t *create_db(void) {
 }
 
 /* Destroy one merch and its stocks; also remove corresponding shelf_ht entries.
- * NOTE: caller must ensure merch is removed from merch_ht (or that it's safe that merch->name is freed here).
- */
+* NOTE: caller must ensure merch is removed from merch_ht (or that it's safe that merch->name is freed here).
+*/
 static void destroy_merch_and_shelves(db_t *db, merch_t *merch)
 {
     if (!merch) return;
@@ -74,36 +74,45 @@ void destroy_db(db_t *db) {
     if (!db) return;
 
     // Destroy all merch structs and their stocks (also remove shelf_ht mappings)
-    elem_t *merch_keys = get_keys(db->merch_ht);
-    size_t merch_count = ioopm_hash_table_size(db->merch_ht);
-    for (size_t i = 0; i < merch_count; ++i) {
-        option_t res = ioopm_hash_table_lookup(db->merch_ht, merch_keys[i]);
-        if (res.success) {
-            merch_t *m = res.value.p;
-            destroy_merch_and_shelves(db, m);
+    if (db->merch_ht && db->merch_ht->size > 0) {
+        elem_t *merch_keys = get_keys(db->merch_ht);
+        size_t merch_count = ioopm_hash_table_size(db->merch_ht);
+        for (size_t i = 0; i < merch_count; ++i) {
+            option_t res = ioopm_hash_table_lookup(db->merch_ht, merch_keys[i]);
+            if (res.success) {
+                merch_t *m = res.value.p;
+                destroy_merch_and_shelves(db, m);
+            }
         }
+        free(merch_keys);
     }
-    //Free the linked list for all keys
-    free(merch_keys);
 
-    // Now destroy the merch hash table (it will free its duplicated keys)
-    ioopm_hash_table_destroy(db->merch_ht);
-
-    // Now shelf_ht should be empty (we removed entries when destroying merch), but destroy anyway
-    ioopm_hash_table_destroy(db->shelf_ht);
-
-    // Destroy carts (cart->items keys are duplicated; cart->items destroy will free those keys)
-    while (db->carts->size > 0) {
-        cart_t *cart = ioopm_linked_list_get(db->carts, 0).p;
-        ioopm_linked_list_remove(db->carts, 0);
-        ioopm_hash_table_destroy(cart->items);
-        free(cart);
+    // Destroy the merch hash table (frees duplicated keys)
+    if (db->merch_ht) {
+        ioopm_hash_table_destroy(db->merch_ht);
     }
-    //Destroy the cart linked list
-    ioopm_linked_list_destroy(db->carts);
-    //Lastly free the database
+
+    // Destroy the shelf hash table (frees duplicated keys)
+    if (db->shelf_ht) {
+        ioopm_hash_table_destroy(db->shelf_ht);
+    }
+
+    // Destroy all carts
+    if (db->carts) {
+        while (db->carts->size > 0) {
+            cart_t *cart = ioopm_linked_list_get(db->carts, 0).p;
+            ioopm_linked_list_remove(db->carts, 0);
+            if (cart->items) {
+                ioopm_hash_table_destroy(cart->items); // frees duplicated keys
+            }
+            free(cart);
+        }
+        ioopm_linked_list_destroy(db->carts);
+    }
+
     free(db);
 }
+
 
 /* Helper to create a merch */
 static merch_t *create_merch(char *name, char *desc, int price) {
@@ -120,8 +129,8 @@ static merch_t *create_merch(char *name, char *desc, int price) {
 }
 
 /* Add merchandise: create merch struct and insert into merch_ht.
- * We duplicate the name into merch struct and also duplicate key into hash via hash_insert_dup.
- */
+* We duplicate the name into merch struct and also duplicate key into hash via hash_insert_dup.
+*/
 bool add_merch(db_t *db, char *name, char *desc, int price) {
     if (ioopm_hash_table_has_key(db->merch_ht, ptr_elem(name))) {
         printf("Merch already exists\n"); //We don't do anything if the merch already exist
@@ -164,8 +173,8 @@ void print_merchandise(db_t *db) {
 }
 
 /* Remove merchandise: require confirmation; reject if any cart references the merch.
- * Removes merch from merch_ht (which frees the duplicate key) and destroys merch & shelves.
- */
+* Removes merch from merch_ht (which frees the duplicate key) and destroys merch & shelves.
+*/
 bool remove_merch(db_t *db, char *name, char *conf_string) {
     if (!(conf_string[0] == 'Y' || conf_string[0] == 'y')) {
         printf("Wrong confirmation code\n");
@@ -201,8 +210,8 @@ bool remove_merch(db_t *db, char *name, char *conf_string) {
 }
 
 /* Change merch (rename / change desc / price). Must rekey merch_ht and rekey all carts.
- * Returns true on success.
- */
+* Returns true on success.
+*/
 bool change_merch(db_t *db, char *old_name, char *new_name, int new_price, char *new_desc, char *conf_string ) {
     if (!(conf_string[0] == 'Y' || conf_string[0] == 'y')) {
         printf("Wrong confirmation code\n");
@@ -219,7 +228,7 @@ bool change_merch(db_t *db, char *old_name, char *new_name, int new_price, char 
     if (strcmp(old_name, new_name) != 0) {
         option_t res_new = ioopm_hash_table_lookup(db->merch_ht, ptr_elem(new_name));
         if (res_new.success) {
-            printf("Merchandise with this new name already exist\n"); //If the new name already exists do nothing.
+            printf("Merchandise with this new name already exist\n"); //If the new name already exists do not
             return false;
         }
     }
@@ -278,7 +287,7 @@ void print_stock(db_t *db, elem_t merch_name) {
         stocks[i] = ioopm_linked_list_get(locs, i).p;
     }
 
-    sort_stock(stocks, size);
+    sort_stock((elem_t *)stocks, size);
 
     for (size_t i = 0; i < size; ++i) {
         printf("%s: %d\n", stocks[i]->shelf, stocks[i]->quantity);
@@ -296,9 +305,9 @@ static stock_t *create_stock(const char *shelf, int no_items) {
 }
 
 /* Replenish: add items to storage location (existing or new).
- * We ensure a shelf cannot contain different merch.
- * shelf_ht keys are duplicated here (hash_insert_dup) and values are merch*.
- */
+* We ensure a shelf cannot contain different merch.
+* shelf_ht keys are duplicated here (hash_insert_dup) and values are merch*.
+*/
 bool replenish_stock(db_t *db, char *storage_loc, elem_t merch_name, int no_item)
 {
     if (no_item < 1) {
@@ -400,43 +409,62 @@ bool remove_cart(db_t *db, int cart_id, char *conf_string) {
 }
 
 /* Add to cart: checks reservation invariants and updates merch->reserved.
- * We use strdup-on-insert for cart->items keys: remove old key before insert to avoid leaking duplicate keys.
- */
+* We use strdup-on-insert for cart->items keys: remove old key before insert to avoid leaking duplicate keys.
+*/
 bool add_to_cart(db_t *db, merch_t *merch, int amnt, cart_t *cart)
 {
-    if (amnt <= 0) {
+    if (!db || !merch || !cart)
+    {
+        printf("Invalid argument(s)\n");
+        return false;
+    }
+
+    // verify that the cart exists in db
+    int index = cart_index(db, cart->id);
+    if (index == -1)
+    {
+        printf("Cart does not exist in this database\n");
+        return false;
+    }
+
+    if (amnt <= 0)
+    {
         printf("Amount must be positive\n");
         return false;
     }
 
-    // available extra we can reserve (excluding this cart's current reservation)
-    int available = merch->total_stock - merch->reserved; // how much additional can be reserved system-wide
+    // available stock (excluding currently reserved)
+    int available = merch->total_stock - merch->reserved;
 
     option_t res = ioopm_hash_table_lookup(cart->items, ptr_elem(merch->name));
-    if (!res.success) {
-        if (amnt > available) {
+
+    if (!res.success)
+    {
+        if (amnt > available)
+        {
             printf("The wanted quantity is more than quantity in stock\n");
             return false;
         }
-        // insert duplicated key for cart's hash
         hash_insert_dup(cart->items, merch->name, int_elem(amnt));
         merch->reserved += amnt;
         return true;
-    } else {
+    }
+    else
+    {
         int cart_amnt = res.value.i;
-        // extra to add is 'amnt'
-        if (amnt > available) {
+        if (amnt > available)
+        {
             printf("Not enough stock for requested quantity.\n");
             return false;
         }
-        // remove old key (frees the old duplicate)
-        ioopm_hash_table_remove(cart->items, ptr_elem(merch->name));
-        // insert new key with updated amount
-        hash_insert_dup(cart->items, merch->name, int_elem(cart_amnt + amnt));
+
+        // Update existing entry without remove/reinsert to avoid memory leak
+        ioopm_hash_table_insert(cart->items, ptr_elem(merch->name), int_elem(cart_amnt + amnt));
         merch->reserved += amnt;
         return true;
     }
 }
+
 
 /* Remove from cart: update reserved and remove/replace key accordingly */
 bool remove_from_cart(db_t *db, merch_t *merch, int amnt, int cart_id)
@@ -467,9 +495,8 @@ bool remove_from_cart(db_t *db, merch_t *merch, int amnt, int cart_id)
         ioopm_hash_table_remove(cart->items, ptr_elem(merch->name));
         merch->reserved -= cart_amnt;
     } else {
-        // replace with decreased count
-        ioopm_hash_table_remove(cart->items, ptr_elem(merch->name));
-        hash_insert_dup(cart->items, merch->name, int_elem(cart_amnt - amnt));
+        // Update existing entry without remove/reinsert to avoid memory leak
+        ioopm_hash_table_insert(cart->items, ptr_elem(merch->name), int_elem(cart_amnt - amnt));
         merch->reserved -= amnt;
     }
 
@@ -509,8 +536,8 @@ int calculate_cost(db_t *db, int cart_id) {
 }
 
 /* Checkout: validate availability, remove quantity from shelves deterministically (left-to-right),
- * remove shelf_ht entries when shelf becomes empty, update total_stock and reserved, remove cart.
- */
+* remove shelf_ht entries when shelf becomes empty, update total_stock and reserved, remove cart.
+*/
 bool checkout_cart(db_t *db, int cart_id) {
     int index = cart_index(db, cart_id);
     if (index == -1) {
@@ -538,8 +565,8 @@ bool checkout_cart(db_t *db, int cart_id) {
         int qty = q.value.i;
         option_t res = ioopm_hash_table_lookup(db->merch_ht, keys[i]);
         if (!res.success) {
-            free(keys);
             printf("Merchandise %s no longer exists\n", (char*)keys[i].p);
+            free(keys);
             return false;
         }
         merch_t *merch = res.value.p;

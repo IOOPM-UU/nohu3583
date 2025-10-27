@@ -1,0 +1,1011 @@
+desc: (none)
+cmd: ./db-test
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=183321
+mem_heap_B=16
+mem_heap_extra_B=8
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=184317
+mem_heap_B=119
+mem_heap_extra_B=33
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=185527
+mem_heap_B=247
+mem_heap_extra_B=81
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=187410
+mem_heap_B=442
+mem_heap_extra_B=142
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=188566
+mem_heap_B=564
+mem_heap_extra_B=180
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=189836
+mem_heap_B=698
+mem_heap_extra_B=238
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=191526
+mem_heap_B=825
+mem_heap_extra_B=287
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=198908
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=200493
+mem_heap_B=825
+mem_heap_extra_B=287
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=202170
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=203429
+mem_heap_B=1892
+mem_heap_extra_B=420
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=205309
+mem_heap_B=1800
+mem_heap_extra_B=368
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=206503
+mem_heap_B=825
+mem_heap_extra_B=287
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=208180
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=209388
+mem_heap_B=1887
+mem_heap_extra_B=425
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=210884
+mem_heap_B=1895
+mem_heap_extra_B=441
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=212606
+mem_heap_B=825
+mem_heap_extra_B=287
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=214283
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=detailed
+n7: 857 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n11: 528 0x485D0AF: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 48 0x10CE8B: main (db-test.c:171)
+  n0: 48 0x10CEA8: main (db-test.c:172)
+  n0: 48 0x10CEC5: main (db-test.c:173)
+  n0: 48 0x10CEE2: main (db-test.c:174)
+  n0: 48 0x10CEFF: main (db-test.c:175)
+  n0: 48 0x10CF1C: main (db-test.c:176)
+  n0: 48 0x10CF39: main (db-test.c:177)
+  n0: 48 0x10CF56: main (db-test.c:178)
+  n0: 48 0x10CF73: main (db-test.c:179)
+  n0: 48 0x10CF90: main (db-test.c:180)
+  n0: 48 0x10CFAD: main (db-test.c:181)
+ n11: 178 0x485D0D3: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 22 0x10CE8B: main (db-test.c:171)
+  n0: 19 0x10CEFF: main (db-test.c:175)
+  n0: 19 0x10CF56: main (db-test.c:178)
+  n0: 19 0x10CF73: main (db-test.c:179)
+  n0: 17 0x10CF90: main (db-test.c:180)
+  n0: 16 0x10CEC5: main (db-test.c:173)
+  n0: 16 0x10CEE2: main (db-test.c:174)
+  n0: 14 0x10CFAD: main (db-test.c:181)
+  n0: 13 0x10CF1C: main (db-test.c:176)
+  n0: 13 0x10CF39: main (db-test.c:177)
+  n0: 10 in 1 place, below massif's threshold (1.00%)
+ n1: 88 0x485CE55: CU_add_suite_with_setup_and_teardown (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 88 0x10CE54: main (db-test.c:165)
+ n2: 32 0x10A8F9: create_db (db.c:35)
+  n1: 32 0x10C39A: test_replenish_stock (db-test.c:51)
+   n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+    n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n0: 32 0x10CFBC: main (db-test.c:184)
+  n0: 0 in 3 places, all below massif's threshold (1.00%)
+ n1: 16 0x485BB51: CU_create_new_registry (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n1: 16 0x485C76B: CU_initialize_registry (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+   n0: 16 0x10CE23: main (db-test.c:162)
+ n1: 15 0x485CE79: CU_add_suite_with_setup_and_teardown (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 15 0x10CE54: main (db-test.c:165)
+ n0: 0 in 7 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=19
+#-----------
+time=215491
+mem_heap_B=1887
+mem_heap_extra_B=425
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=217247
+mem_heap_B=1965
+mem_heap_extra_B=507
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=218368
+mem_heap_B=2043
+mem_heap_extra_B=581
+mem_stacks_B=0
+heap_tree=detailed
+n12: 2043 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 880 0x109C31: ioopm_hash_table_create (hash_table.c:44)
+  n2: 440 0x10A916: create_db (db.c:37)
+   n1: 440 0x10C39A: test_replenish_stock (db-test.c:51)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 3 places, all below massif's threshold (1.00%)
+  n2: 440 0x10A944: create_db (db.c:40)
+   n1: 440 0x10C39A: test_replenish_stock (db-test.c:51)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 3 places, all below massif's threshold (1.00%)
+ n11: 528 0x485D0AF: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 48 0x10CE8B: main (db-test.c:171)
+  n0: 48 0x10CEA8: main (db-test.c:172)
+  n0: 48 0x10CEC5: main (db-test.c:173)
+  n0: 48 0x10CEE2: main (db-test.c:174)
+  n0: 48 0x10CEFF: main (db-test.c:175)
+  n0: 48 0x10CF1C: main (db-test.c:176)
+  n0: 48 0x10CF39: main (db-test.c:177)
+  n0: 48 0x10CF56: main (db-test.c:178)
+  n0: 48 0x10CF73: main (db-test.c:179)
+  n0: 48 0x10CF90: main (db-test.c:180)
+  n0: 48 0x10CFAD: main (db-test.c:181)
+ n1: 178 0x485D0D3: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 178 in 11 places, all below massif's threshold (1.00%)
+ n3: 96 0x1094CD: ioopm_linked_list_create (linked_list.c:13)
+  n1: 32 0x10A2C2: ioopm_hash_table_keys (hash_table.c:229)
+   n1: 32 0x10A7AB: get_keys (sort.c:43)
+    n2: 32 0x10AAA7: destroy_db (db.c:78)
+     n1: 32 0x10C502: test_replenish_stock (db-test.c:58)
+      n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+         n0: 32 0x10CFBC: main (db-test.c:184)
+     n0: 0 in 2 places, all below massif's threshold (1.00%)
+  n2: 32 0x10A965: create_db (db.c:43)
+   n1: 32 0x10C39A: test_replenish_stock (db-test.c:51)
+    n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 32 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 3 places, all below massif's threshold (1.00%)
+  n1: 32 0x10AC75: create_merch (db.c:124)
+   n2: 32 0x10ACFA: add_merch (db.c:140)
+    n1: 32 0x10C3BD: test_replenish_stock (db-test.c:52)
+     n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n0: 32 0x10CFBC: main (db-test.c:184)
+    n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n1: 88 0x485CE55: CU_add_suite_with_setup_and_teardown (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 88 0x10CE54: main (db-test.c:165)
+ n1: 72 0x109BA2: entry_input (hash_table.c:32)
+  n1: 72 0x109E06: ioopm_hash_table_insert (hash_table.c:95)
+   n2: 72 0x10A8DB: hash_insert_dup (db.c:17)
+    n1: 48 0x10B550: replenish_stock (db.c:355)
+     n0: 48 in 2 places, all below massif's threshold (1.00%)
+    n0: 24 in 1 place, below massif's threshold (1.00%)
+ n1: 40 0x10AC30: create_merch (db.c:119)
+  n2: 40 0x10ACFA: add_merch (db.c:140)
+   n1: 40 0x10C3BD: test_replenish_stock (db-test.c:52)
+    n1: 40 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 40 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 40 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 40 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n1: 34 0x491B35E: strdup (strdup.c:42)
+  n0: 34 in 4 places, all below massif's threshold (1.00%)
+ n2: 32 0x109562: ioopm_linked_list_append (linked_list.c:35)
+  n1: 32 0x10B51F: replenish_stock (db.c:351)
+   n0: 32 in 2 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n2: 32 0x10A8F9: create_db (db.c:35)
+  n1: 32 0x10C39A: test_replenish_stock (db-test.c:51)
+   n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+    n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n0: 32 0x10CFBC: main (db-test.c:184)
+  n0: 0 in 3 places, all below massif's threshold (1.00%)
+ n1: 32 0x10B369: create_stock (db.c:301)
+  n1: 32 0x10B504: replenish_stock (db.c:350)
+   n0: 32 in 2 places, all below massif's threshold (1.00%)
+ n0: 31 in 3 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=22
+#-----------
+time=219626
+mem_heap_B=2016
+mem_heap_extra_B=568
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=220512
+mem_heap_B=1799
+mem_heap_extra_B=369
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=221672
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=223381
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=225295
+mem_heap_B=1976
+mem_heap_extra_B=504
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=226778
+mem_heap_B=2062
+mem_heap_extra_B=594
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=228300
+mem_heap_B=2094
+mem_heap_extra_B=602
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=230239
+mem_heap_B=1991
+mem_heap_extra_B=521
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=231791
+mem_heap_B=889
+mem_heap_extra_B=303
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=233563
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=234722
+mem_heap_B=1881
+mem_heap_extra_B=431
+mem_stacks_B=0
+heap_tree=detailed
+n9: 1881 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 880 0x109C31: ioopm_hash_table_create (hash_table.c:44)
+  n2: 440 0x10A916: create_db (db.c:37)
+   n1: 440 0x10C613: test_change_merch (db-test.c:75)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 5 places, all below massif's threshold (1.00%)
+  n2: 440 0x10A944: create_db (db.c:40)
+   n1: 440 0x10C613: test_change_merch (db-test.c:75)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 5 places, all below massif's threshold (1.00%)
+ n11: 528 0x485D0AF: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 48 0x10CE8B: main (db-test.c:171)
+  n0: 48 0x10CEA8: main (db-test.c:172)
+  n0: 48 0x10CEC5: main (db-test.c:173)
+  n0: 48 0x10CEE2: main (db-test.c:174)
+  n0: 48 0x10CEFF: main (db-test.c:175)
+  n0: 48 0x10CF1C: main (db-test.c:176)
+  n0: 48 0x10CF39: main (db-test.c:177)
+  n0: 48 0x10CF56: main (db-test.c:178)
+  n0: 48 0x10CF73: main (db-test.c:179)
+  n0: 48 0x10CF90: main (db-test.c:180)
+  n0: 48 0x10CFAD: main (db-test.c:181)
+ n1: 178 0x485D0D3: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 178 in 11 places, all below massif's threshold (1.00%)
+ n1: 88 0x485CE55: CU_add_suite_with_setup_and_teardown (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 88 0x10CE54: main (db-test.c:165)
+ n3: 64 0x1094CD: ioopm_linked_list_create (linked_list.c:13)
+  n2: 32 0x10A965: create_db (db.c:43)
+   n1: 32 0x10C613: test_change_merch (db-test.c:75)
+    n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 32 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 5 places, all below massif's threshold (1.00%)
+  n1: 32 0x10AC75: create_merch (db.c:124)
+   n2: 32 0x10ACFA: add_merch (db.c:140)
+    n1: 32 0x10C636: test_change_merch (db-test.c:76)
+     n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n0: 32 0x10CFBC: main (db-test.c:184)
+    n0: 0 in 5 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n0: 47 in 6 places, all below massif's threshold (1.00%)
+ n1: 40 0x10AC30: create_merch (db.c:119)
+  n2: 40 0x10ACFA: add_merch (db.c:140)
+   n1: 40 0x10C636: test_change_merch (db-test.c:76)
+    n1: 40 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 40 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 40 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 40 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 5 places, all below massif's threshold (1.00%)
+ n2: 32 0x10A8F9: create_db (db.c:35)
+  n1: 32 0x10C613: test_change_merch (db-test.c:75)
+   n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+    n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n0: 32 0x10CFBC: main (db-test.c:184)
+  n0: 0 in 5 places, all below massif's threshold (1.00%)
+ n1: 24 0x109BA2: entry_input (hash_table.c:32)
+  n1: 24 0x109E06: ioopm_hash_table_insert (hash_table.c:95)
+   n2: 24 0x10A8DB: hash_insert_dup (db.c:17)
+    n2: 24 0x10AD29: add_merch (db.c:144)
+     n1: 24 0x10C636: test_change_merch (db-test.c:76)
+      n1: 24 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 24 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n1: 24 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+         n0: 24 0x10CFBC: main (db-test.c:184)
+     n0: 0 in 5 places, all below massif's threshold (1.00%)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+#-----------
+snapshot=33
+#-----------
+time=235587
+mem_heap_B=1876
+mem_heap_extra_B=412
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=236964
+mem_heap_B=1916
+mem_heap_extra_B=436
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=237966
+mem_heap_B=1860
+mem_heap_extra_B=436
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=239201
+mem_heap_B=889
+mem_heap_extra_B=303
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=240973
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=242903
+mem_heap_B=1878
+mem_heap_extra_B=410
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=244408
+mem_heap_B=889
+mem_heap_extra_B=303
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=246178
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=247409
+mem_heap_B=1785
+mem_heap_extra_B=343
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=248561
+mem_heap_B=889
+mem_heap_extra_B=303
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=250331
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=251490
+mem_heap_B=1881
+mem_heap_extra_B=431
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=253484
+mem_heap_B=2420
+mem_heap_extra_B=556
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=254708
+mem_heap_B=2500
+mem_heap_extra_B=604
+mem_stacks_B=0
+heap_tree=peak
+n10: 2500 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 1320 0x109C31: ioopm_hash_table_create (hash_table.c:44)
+  n2: 440 0x10A916: create_db (db.c:37)
+   n1: 440 0x10C99F: test_add_to_cart_and_cost (db-test.c:112)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 8 places, all below massif's threshold (1.00%)
+  n2: 440 0x10A944: create_db (db.c:40)
+   n1: 440 0x10C99F: test_add_to_cart_and_cost (db-test.c:112)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 8 places, all below massif's threshold (1.00%)
+  n2: 440 0x10B593: create_cart (db.c:363)
+   n1: 440 0x10C9ED: test_add_to_cart_and_cost (db-test.c:115)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n11: 528 0x485D0AF: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 48 0x10CE8B: main (db-test.c:171)
+  n0: 48 0x10CEA8: main (db-test.c:172)
+  n0: 48 0x10CEC5: main (db-test.c:173)
+  n0: 48 0x10CEE2: main (db-test.c:174)
+  n0: 48 0x10CEFF: main (db-test.c:175)
+  n0: 48 0x10CF1C: main (db-test.c:176)
+  n0: 48 0x10CF39: main (db-test.c:177)
+  n0: 48 0x10CF56: main (db-test.c:178)
+  n0: 48 0x10CF73: main (db-test.c:179)
+  n0: 48 0x10CF90: main (db-test.c:180)
+  n0: 48 0x10CFAD: main (db-test.c:181)
+ n1: 178 0x485D0D3: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 178 in 11 places, all below massif's threshold (1.00%)
+ n0: 98 in 6 places, all below massif's threshold (1.00%)
+ n3: 96 0x1094CD: ioopm_linked_list_create (linked_list.c:13)
+  n1: 32 0x10A2C2: ioopm_hash_table_keys (hash_table.c:229)
+   n2: 32 0x10A7AB: get_keys (sort.c:43)
+    n1: 32 0x10BACE: calculate_cost (db.c:521)
+     n1: 32 0x10CAAB: test_add_to_cart_and_cost (db-test.c:120)
+      n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+         n0: 32 0x10CFBC: main (db-test.c:184)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n2: 32 0x10A965: create_db (db.c:43)
+   n1: 32 0x10C99F: test_add_to_cart_and_cost (db-test.c:112)
+    n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 32 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 8 places, all below massif's threshold (1.00%)
+  n1: 32 0x10AC75: create_merch (db.c:124)
+   n2: 32 0x10ACFA: add_merch (db.c:140)
+    n1: 32 0x10C9C2: test_add_to_cart_and_cost (db-test.c:113)
+     n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n0: 32 0x10CFBC: main (db-test.c:184)
+    n0: 0 in 7 places, all below massif's threshold (1.00%)
+ n1: 88 0x485CE55: CU_add_suite_with_setup_and_teardown (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 88 0x10CE54: main (db-test.c:165)
+ n1: 72 0x109BA2: entry_input (hash_table.c:32)
+  n1: 72 0x109E06: ioopm_hash_table_insert (hash_table.c:95)
+   n1: 72 0x10A8DB: hash_insert_dup (db.c:17)
+    n0: 72 in 4 places, all below massif's threshold (1.00%)
+ n1: 48 0x109562: ioopm_linked_list_append (linked_list.c:35)
+  n0: 48 in 3 places, all below massif's threshold (1.00%)
+ n1: 40 0x10AC30: create_merch (db.c:119)
+  n2: 40 0x10ACFA: add_merch (db.c:140)
+   n1: 40 0x10C9C2: test_add_to_cart_and_cost (db-test.c:113)
+    n1: 40 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 40 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 40 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 40 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 7 places, all below massif's threshold (1.00%)
+ n2: 32 0x10A8F9: create_db (db.c:35)
+  n1: 32 0x10C99F: test_add_to_cart_and_cost (db-test.c:112)
+   n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+    n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n0: 32 0x10CFBC: main (db-test.c:184)
+  n0: 0 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=47
+#-----------
+time=255910
+mem_heap_B=2492
+mem_heap_extra_B=588
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=256785
+mem_heap_B=2449
+mem_heap_extra_B=567
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=258259
+mem_heap_B=1390
+mem_heap_extra_B=370
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=260780
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=261886
+mem_heap_B=1882
+mem_heap_extra_B=430
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=262966
+mem_heap_B=1944
+mem_heap_extra_B=504
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=264113
+mem_heap_B=2444
+mem_heap_extra_B=572
+mem_stacks_B=0
+heap_tree=detailed
+n10: 2444 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 1320 0x109C31: ioopm_hash_table_create (hash_table.c:44)
+  n2: 440 0x10A916: create_db (db.c:37)
+   n1: 440 0x10CAFE: test_remove_from_cart (db-test.c:127)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 9 places, all below massif's threshold (1.00%)
+  n2: 440 0x10A944: create_db (db.c:40)
+   n1: 440 0x10CAFE: test_remove_from_cart (db-test.c:127)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 9 places, all below massif's threshold (1.00%)
+  n2: 440 0x10B593: create_cart (db.c:363)
+   n1: 440 0x10CB4C: test_remove_from_cart (db-test.c:130)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n11: 528 0x485D0AF: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 48 0x10CE8B: main (db-test.c:171)
+  n0: 48 0x10CEA8: main (db-test.c:172)
+  n0: 48 0x10CEC5: main (db-test.c:173)
+  n0: 48 0x10CEE2: main (db-test.c:174)
+  n0: 48 0x10CEFF: main (db-test.c:175)
+  n0: 48 0x10CF1C: main (db-test.c:176)
+  n0: 48 0x10CF39: main (db-test.c:177)
+  n0: 48 0x10CF56: main (db-test.c:178)
+  n0: 48 0x10CF73: main (db-test.c:179)
+  n0: 48 0x10CF90: main (db-test.c:180)
+  n0: 48 0x10CFAD: main (db-test.c:181)
+ n1: 178 0x485D0D3: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 178 in 11 places, all below massif's threshold (1.00%)
+ n0: 90 in 6 places, all below massif's threshold (1.00%)
+ n1: 88 0x485CE55: CU_add_suite_with_setup_and_teardown (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 88 0x10CE54: main (db-test.c:165)
+ n1: 72 0x109BA2: entry_input (hash_table.c:32)
+  n1: 72 0x109E06: ioopm_hash_table_insert (hash_table.c:95)
+   n1: 72 0x10A8DB: hash_insert_dup (db.c:17)
+    n0: 72 in 4 places, all below massif's threshold (1.00%)
+ n3: 64 0x1094CD: ioopm_linked_list_create (linked_list.c:13)
+  n2: 32 0x10A965: create_db (db.c:43)
+   n1: 32 0x10CAFE: test_remove_from_cart (db-test.c:127)
+    n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 32 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 9 places, all below massif's threshold (1.00%)
+  n1: 32 0x10AC75: create_merch (db.c:124)
+   n2: 32 0x10ACFA: add_merch (db.c:140)
+    n1: 32 0x10CB21: test_remove_from_cart (db-test.c:128)
+     n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n0: 32 0x10CFBC: main (db-test.c:184)
+    n0: 0 in 8 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 40 0x10AC30: create_merch (db.c:119)
+  n2: 40 0x10ACFA: add_merch (db.c:140)
+   n1: 40 0x10CB21: test_remove_from_cart (db-test.c:128)
+    n1: 40 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 40 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 40 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 40 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 8 places, all below massif's threshold (1.00%)
+ n1: 32 0x109562: ioopm_linked_list_append (linked_list.c:35)
+  n0: 32 in 3 places, all below massif's threshold (1.00%)
+ n2: 32 0x10A8F9: create_db (db.c:35)
+  n1: 32 0x10CAFE: test_remove_from_cart (db-test.c:127)
+   n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+    n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n0: 32 0x10CFBC: main (db-test.c:184)
+  n0: 0 in 9 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=54
+#-----------
+time=265546
+mem_heap_B=2440
+mem_heap_extra_B=552
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=267003
+mem_heap_B=2421
+mem_heap_extra_B=531
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=267965
+mem_heap_B=1801
+mem_heap_extra_B=351
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=269124
+mem_heap_B=905
+mem_heap_extra_B=311
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=58
+#-----------
+time=270922
+mem_heap_B=857
+mem_heap_extra_B=295
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=59
+#-----------
+time=271797
+mem_heap_B=1862
+mem_heap_extra_B=410
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=60
+#-----------
+time=272767
+mem_heap_B=1902
+mem_heap_extra_B=434
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=61
+#-----------
+time=274279
+mem_heap_B=2427
+mem_heap_extra_B=549
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=62
+#-----------
+time=275382
+mem_heap_B=2507
+mem_heap_extra_B=597
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=277007
+mem_heap_B=2451
+mem_heap_extra_B=565
+mem_stacks_B=0
+heap_tree=detailed
+n11: 2451 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 1320 0x109C31: ioopm_hash_table_create (hash_table.c:44)
+  n2: 440 0x10A916: create_db (db.c:37)
+   n1: 440 0x10CCB6: test_checkout_cart (db-test.c:144)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 10 places, all below massif's threshold (1.00%)
+  n2: 440 0x10A944: create_db (db.c:40)
+   n1: 440 0x10CCB6: test_checkout_cart (db-test.c:144)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 10 places, all below massif's threshold (1.00%)
+  n2: 440 0x10B593: create_cart (db.c:363)
+   n1: 440 0x10CD04: test_checkout_cart (db-test.c:147)
+    n1: 440 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 440 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 440 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 440 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 3 places, all below massif's threshold (1.00%)
+ n11: 528 0x485D0AF: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 48 0x10CE8B: main (db-test.c:171)
+  n0: 48 0x10CEA8: main (db-test.c:172)
+  n0: 48 0x10CEC5: main (db-test.c:173)
+  n0: 48 0x10CEE2: main (db-test.c:174)
+  n0: 48 0x10CEFF: main (db-test.c:175)
+  n0: 48 0x10CF1C: main (db-test.c:176)
+  n0: 48 0x10CF39: main (db-test.c:177)
+  n0: 48 0x10CF56: main (db-test.c:178)
+  n0: 48 0x10CF73: main (db-test.c:179)
+  n0: 48 0x10CF90: main (db-test.c:180)
+  n0: 48 0x10CFAD: main (db-test.c:181)
+ n1: 178 0x485D0D3: CU_add_test (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 178 in 11 places, all below massif's threshold (1.00%)
+ n1: 88 0x485CE55: CU_add_suite_with_setup_and_teardown (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+  n0: 88 0x10CE54: main (db-test.c:165)
+ n1: 72 0x109BA2: entry_input (hash_table.c:32)
+  n1: 72 0x109E06: ioopm_hash_table_insert (hash_table.c:95)
+   n1: 72 0x10A8DB: hash_insert_dup (db.c:17)
+    n0: 72 in 4 places, all below massif's threshold (1.00%)
+ n3: 64 0x1094CD: ioopm_linked_list_create (linked_list.c:13)
+  n2: 32 0x10A965: create_db (db.c:43)
+   n1: 32 0x10CCB6: test_checkout_cart (db-test.c:144)
+    n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 32 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 10 places, all below massif's threshold (1.00%)
+  n1: 32 0x10AC75: create_merch (db.c:124)
+   n2: 32 0x10ACFA: add_merch (db.c:140)
+    n1: 32 0x10CCD9: test_checkout_cart (db-test.c:145)
+     n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+        n0: 32 0x10CFBC: main (db-test.c:184)
+    n0: 0 in 9 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n0: 63 in 5 places, all below massif's threshold (1.00%)
+ n1: 40 0x10AC30: create_merch (db.c:119)
+  n2: 40 0x10ACFA: add_merch (db.c:140)
+   n1: 40 0x10CCD9: test_checkout_cart (db-test.c:145)
+    n1: 40 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 40 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n1: 40 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+       n0: 40 0x10CFBC: main (db-test.c:184)
+   n0: 0 in 9 places, all below massif's threshold (1.00%)
+ n1: 34 0x491B35E: strdup (strdup.c:42)
+  n0: 34 in 6 places, all below massif's threshold (1.00%)
+ n1: 32 0x109562: ioopm_linked_list_append (linked_list.c:35)
+  n0: 32 in 3 places, all below massif's threshold (1.00%)
+ n2: 32 0x10A8F9: create_db (db.c:35)
+  n1: 32 0x10CCB6: test_checkout_cart (db-test.c:144)
+   n1: 32 0x485B13C: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+    n1: 32 0x485B497: ??? (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+     n1: 32 0x485C56F: CU_run_all_tests (in /usr/lib/x86_64-linux-gnu/libcunit.so.1.0.1)
+      n0: 32 0x10CFBC: main (db-test.c:184)
+  n0: 0 in 10 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=64
+#-----------
+time=277935
+mem_heap_B=1980
+mem_heap_extra_B=508
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=65
+#-----------
+time=279210
+mem_heap_B=1953
+mem_heap_extra_B=495
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=66
+#-----------
+time=280172
+mem_heap_B=1329
+mem_heap_extra_B=319
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=67
+#-----------
+time=298198
+mem_heap_B=1090
+mem_heap_extra_B=302
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=68
+#-----------
+time=311488
+mem_heap_B=825
+mem_heap_extra_B=287
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=69
+#-----------
+time=312379
+mem_heap_B=502
+mem_heap_extra_B=178
+mem_stacks_B=0
+heap_tree=empty

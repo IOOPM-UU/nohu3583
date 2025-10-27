@@ -8,7 +8,7 @@
     #include "common.h"
     #include "hash_table.h"
 
-    #define No_Buckets 4507  
+    #define No_Buckets 5  
 
 
     /// Find the previous entry for a given key in a bucket
@@ -174,12 +174,17 @@ void ioopm_hash_table_destroy(ioopm_hash_table_t *ht)
             if (target && ht->eq_func(target->key, key))
             {
                 prev->next = target->next; 
+                
+                // FREE THE KEY if should_free_keys is set
+                if (ht->should_free_keys && target->key.p != NULL) {
+                    free(target->key.p);
+                }
+                
                 free(target);
                 ht->size--;
             }
         }
     }
-
     /// @brief returns the number of key => value entries in the hash table
     size_t ioopm_hash_table_size(ioopm_hash_table_t *ht)
     {
@@ -202,6 +207,12 @@ void ioopm_hash_table_destroy(ioopm_hash_table_t *ht)
             {
                 entry_t *tmp = current;
                 current = current->next;
+                
+                // FREE THE KEY if should_free_keys is set
+                if (ht->should_free_keys && tmp->key.p != NULL) {
+                    free(tmp->key.p);
+                }
+                
                 free(tmp);
             }
             ht->buckets[i].next = NULL; // reset bucket
