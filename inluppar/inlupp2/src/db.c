@@ -15,36 +15,37 @@ static void hash_insert_dup(ioopm_hash_table_t *ht, const char *key, elem_t valu
 {
     char *kdup = strdup(key);
     ioopm_hash_table_insert(ht, ptr_elem(kdup), value);
-
 }
-
-// /* Helper: remove old_key from ht (frees its duplicate key if ht->should_free_keys)
-// * and insert new_key (duplicated) with given value.
-// * Must be done since the new name could be hashed into a new bucket. If we want to look in the real bucket using hash_str it wont work if we dont remove then add.
-// */
-// static bool hash_rekey(ioopm_hash_table_t *ht, const char *old_key, const char *new_key, elem_t value)
-// {
-//     ioopm_hash_table_remove(ht, ptr_elem((char*)old_key)); // remove old duplicate key
-//     char *kdup = strdup(new_key);
-//     ioopm_hash_table_insert(ht, ptr_elem(kdup), value);
-//     return true;
-// }
 
 /* Create / destroy database */
 db_t *create_db(void) {
     db_t *db = calloc(1, sizeof(db_t));
 
-    db->merch_ht = ioopm_hash_table_create(hash_str, str_eq); //assuming that we use str
-    db->merch_ht->should_free_keys = true; //Sets as true since we use strdup to alloc
+    db->merch_ht = ioopm_hash_table_create(hash_str, str_eq);
+    db->merch_ht->should_free_keys = true;
 
-    db->shelf_ht = ioopm_hash_table_create(hash_str, str_eq); //assuming that we use str
-    db->shelf_ht->should_free_keys = true; //Sets as true since we use strdup to alloc
+    db->shelf_ht = ioopm_hash_table_create(hash_str, str_eq);
+    db->shelf_ht->should_free_keys = true;
 
     db->carts = ioopm_linked_list_create(NULL);
     db->next_cart_id = 1;
 
     return db;
 }
+
+// /* Helper: Populate shelf_map for existing merchandise (for one-time migration) */
+//  void populate_shelf_map(merch_t *merch) {
+//     if (!merch || !merch->locations) return;
+    
+//     ioopm_link_t *current = merch->locations->head;
+//     while (current) {
+//         stock_t *stock = current->element.p;
+//         if (stock && stock->shelf) {
+//             ioopm_hash_table_insert(merch->shelf_map, ptr_elem(stock->shelf), ptr_elem(stock));
+//         }
+//         current = current->next;
+//     }
+// }
 
 /* Destroy one merch and its stocks; also remove corresponding shelf_ht entries.
 * NOTE: caller must ensure merch is removed from merch_ht (or that it's safe that merch->name is freed here).
@@ -65,6 +66,10 @@ static void destroy_merch_and_shelves(db_t *db, merch_t *merch)
     }
 
     ioopm_linked_list_destroy(merch->locations);
+    
+    // NEW: Destroy the shelf map (no need to free keys - they're owned by stock entries)
+    ioopm_hash_table_destroy(merch->shelf_map);
+    
     free(merch->name);
     free(merch->desc);
     free(merch);
@@ -113,15 +118,19 @@ void destroy_db(db_t *db) {
     free(db);
 }
 
-
 /* Helper to create a merch */
 static merch_t *create_merch(char *name, char *desc, int price) {
     merch_t *merch = calloc(1, sizeof(merch_t));
 
-    merch->name = strdup(name);  // merch struct owns its copy
-    merch->desc = strdup(desc); //same as above
+    merch->name = strdup(name);
+    merch->desc = strdup(desc);
     merch->price = price;
-    merch->locations = ioopm_linked_list_create(NULL); //A function is not needed now
+    merch->locations = ioopm_linked_list_create(NULL);
+    
+    // NEW: Create shelf map for O(1) stock lookups
+    merch->shelf_map = ioopm_hash_table_create(hash_str, str_eq);
+    merch->shelf_map->should_free_keys = false; // keys are owned by stock entries
+    
     merch->total_stock = 0;
     merch->reserved = 0;
 
@@ -133,12 +142,12 @@ static merch_t *create_merch(char *name, char *desc, int price) {
 */
 bool add_merch(db_t *db, char *name, char *desc, int price) {
     if (ioopm_hash_table_has_key(db->merch_ht, ptr_elem(name))) {
-        printf("Merch already exists\n"); //We don't do anything if the merch already exist
+        printf("Merch already exists\n");
         return false;
     }
 
     merch_t *merch = create_merch(name, desc, price);
-    if (!merch) return false; //If something is wrong don't do anything
+    if (!merch) return false;
 
     // Insert into merch_ht: duplicate key for hash ownership (separate from merch->name)
     hash_insert_dup(db->merch_ht, merch->name, ptr_elem(merch));
@@ -163,9 +172,9 @@ void print_merchandise(db_t *db) {
             printf("%s\n", (char *)arr[count].p);
         }
         if (count < size) {
-            printf("Continue listing? (N/n to stop): "); //here we should use ask_question
+            printf("Continue listing? (N/n to stop): ");
             char input[16];
-            if (!fgets(input, sizeof(input), stdin)) break; //remove this line when above is changed.
+            if (!fgets(input, sizeof(input), stdin)) break;
             if (input[0] == 'N' || input[0] == 'n') break;
         }
     }
@@ -194,8 +203,8 @@ bool remove_merch(db_t *db, char *name, char *conf_string) {
         cart_t *cart = c->element.p;
         option_t q = ioopm_hash_table_lookup(cart->items, ptr_elem(merch->name));
         if (q.success) {
-            printf("Cannot delete: item present in one or more carts\n"); //either this or just remove the item from cart
-            return false;                                                 //Right now blocks the change
+            printf("Cannot delete: item present in one or more carts\n");
+            return false;
         }
         c = c->next;
     }
@@ -220,7 +229,7 @@ bool change_merch(db_t *db, char *old_name, char *new_name, int new_price, char 
 
     option_t res_old = ioopm_hash_table_lookup(db->merch_ht, ptr_elem(old_name));
     if (!res_old.success) {
-        printf("Merchandise does not exist\n"); //checks if the merch does not exist
+        printf("Merchandise does not exist\n");
         return false;
     }
 
@@ -228,7 +237,7 @@ bool change_merch(db_t *db, char *old_name, char *new_name, int new_price, char 
     if (strcmp(old_name, new_name) != 0) {
         option_t res_new = ioopm_hash_table_lookup(db->merch_ht, ptr_elem(new_name));
         if (res_new.success) {
-            printf("Merchandise with this new name already exist\n"); //If the new name already exists do not
+            printf("Merchandise with this new name already exist\n");
             return false;
         }
     }
@@ -261,7 +270,6 @@ bool change_merch(db_t *db, char *old_name, char *new_name, int new_price, char 
         cur = cur->next;
     }
 
-    // Note: shelf_ht stores merch* as value so no rekeying needed there.
     return true;
 }
 
@@ -299,7 +307,7 @@ void print_stock(db_t *db, elem_t merch_name) {
 /* Create stock entry */
 static stock_t *create_stock(const char *shelf, int no_items) {
     stock_t *stock = calloc(1, sizeof(stock_t));
-    stock->shelf = strdup(shelf);   // stock owns its copy
+    stock->shelf = strdup(shelf);
     stock->quantity = no_items;
     return stock;
 }
@@ -331,28 +339,31 @@ bool replenish_stock(db_t *db, char *storage_loc, elem_t merch_name, int no_item
             printf("Storage location %s already stores a different merchandise\n", storage_loc);
             return false;
         }
-        // else same merch: add quantity to existing stock entry
     }
 
-    // find existing stock on merch->locations
-    ioopm_link_t *current = merch->locations->head;
-    while (current) {
-        stock_t *stock = current->element.p;
-        if (strcmp(stock->shelf, storage_loc) == 0) {
-            stock->quantity += no_item;
-            merch->total_stock += no_item;
-            return true;
-        }
-        current = current->next;
+    // NEW: O(1) lookup using shelf_map instead of O(n) linear search!
+    option_t stock_res = ioopm_hash_table_lookup(merch->shelf_map, ptr_elem(storage_loc));
+    if (stock_res.success) {
+        // Found existing stock - update quantity
+        stock_t *stock = stock_res.value.p;
+        stock->quantity += no_item;
+        merch->total_stock += no_item;
+        return true;
     }
 
-    // new stock — create and append
+    // NEW STOCK - create and add to both data structures
     stock_t *new_stock = create_stock(storage_loc, no_item);
+    
+    // Add to linked list (for ordered iteration)
     ioopm_linked_list_append(merch->locations, ptr_elem(new_stock));
-    merch->total_stock += no_item;
-
-    // insert duplicate key for shelf_ht (hash owns key) and store merch* as value
+    
+    // NEW: Add to shelf_map for O(1) lookups
+    ioopm_hash_table_insert(merch->shelf_map, ptr_elem(new_stock->shelf), ptr_elem(new_stock));
+    
+    // Add to global shelf_ht
     hash_insert_dup(db->shelf_ht, new_stock->shelf, ptr_elem(merch));
+    
+    merch->total_stock += no_item;
 
     return true;
 }
@@ -401,7 +412,6 @@ bool remove_cart(db_t *db, int cart_id, char *conf_string) {
     elem_t removed = ioopm_linked_list_remove(db->carts, index);
     cart_t *cart = removed.p;
 
-    // When destroying cart->items the hash will free duplicated keys
     ioopm_hash_table_destroy(cart->items);
     free(cart);
 
@@ -465,7 +475,6 @@ bool add_to_cart(db_t *db, merch_t *merch, int amnt, cart_t *cart)
     }
 }
 
-
 /* Remove from cart: update reserved and remove/replace key accordingly */
 bool remove_from_cart(db_t *db, merch_t *merch, int amnt, int cart_id)
 {
@@ -527,7 +536,6 @@ int calculate_cost(db_t *db, int cart_id) {
             merch_t *merch = res.value.p;
             sum += merch->price * qty;
         } else {
-            // If merch no longer exists, ignore or handle error
             printf("Warning: merchandise %s in cart no longer exists\n", (char *)keys[i].p);
         }
     }
@@ -593,9 +601,15 @@ bool checkout_cart(db_t *db, int cart_id) {
                 remaining = 0;
                 j++;
             } else {
-                // Use up this shelf completely: remove shelf_ht mapping first, then free
+                // Use up this shelf completely
                 remaining -= stock->quantity;
-                ioopm_hash_table_remove(db->shelf_ht, ptr_elem(stock->shelf)); // frees shelf_ht key duplicate
+                
+                // NEW: Remove from shelf_map first
+                ioopm_hash_table_remove(merch->shelf_map, ptr_elem(stock->shelf));
+                
+                // Remove from global shelf_ht
+                ioopm_hash_table_remove(db->shelf_ht, ptr_elem(stock->shelf));
+                
                 free(stock->shelf);
                 free(stock);
                 ioopm_linked_list_remove(merch->locations, j); // don't increment j
@@ -603,7 +617,6 @@ bool checkout_cart(db_t *db, int cart_id) {
         }
 
         if (remaining != 0) {
-            // inconsistent state (shouldn't happen after validation)
             free(keys);
             printf("Checkout failed: inconsistent stock for %s\n", merch->name);
             return false;
@@ -622,3 +635,4 @@ bool checkout_cart(db_t *db, int cart_id) {
 
     return true;
 }
+
